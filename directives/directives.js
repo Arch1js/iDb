@@ -18,3 +18,10 @@ app.directive("search", function () {
 		templateUrl: "/views/search_view.php"
 	}
 });
+
+app.directive("admin", function () {
+	return {
+		restrict: "A",
+		templateUrl: "/views/admin_panel.php"
+	}
+});

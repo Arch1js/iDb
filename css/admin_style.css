@@ -3,7 +3,7 @@
 body { 
 	font: normal 14px 'Open Sans', Arial, sans-serif;
 	color: #999;
-	background: transparent url('http://p1.pichost.me/i/20/1428758.jpg') center center no-repeat fixed;
+	/*background: transparent url('http://p1.pichost.me/i/20/1428758.jpg') center center no-repeat fixed;*/
 }
 
 
@@ -145,4 +145,7 @@ a:link
     border: 1px solid white;
     border-radius: 30px;
     margin-left: 10px;
+}
+#admin_tools {
+    margin: 10px;
 }

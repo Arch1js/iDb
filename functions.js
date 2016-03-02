@@ -3,17 +3,35 @@ var app = angular.module('carApp', []);
 
 function adminCtrl($scope, $http) {
 $scope.url = '/search.php';
+
+
+$scope.addRecord = function() {
+ $scope.url2 = 'addRecord.php';   
     
+        var data2 = {    
+        /*make1: $scope.addmake,
+        model1: $scope.addodel*/
+        
+    };
+    
+    $http.post($scope.url2, data).
+		success(function(data2, status) {
+			$scope.result3 = data;
+
+
+		})
+    
+}
     
 $scope.adminSearch = function() {
         
         var data = {    
-        make: $scope.make,
+        /*make: $scope.make,
         colour: $scope.colour,
         milage: $scope.milage,
         carmodel: $scope.carmodel.model,
         minprice: $scope.minprice,
-        maxprice: $scope.maxprice
+        maxprice: $scope.maxprice*/
     };
     
     $http.post($scope.url, data).
@@ -126,6 +144,8 @@ app.filter('startFrom', function() {
     }
 });
 
-   
+/*$scope.setPage = function () {
+        $scope.currentPage = this.n;
+};*/   
 
 

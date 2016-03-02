@@ -147,7 +147,7 @@
 </div>
   
     <ul class="pagination pull-right" ng-show="paginator">
-  <li><a href ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">« Prev</a>
+  <li><a href ng-disabled="currentPage == 0" ng-click="currentPage=currentPage - 1">« Prev</a>
   <li><a href="#">{{currentPage+1}}/{{numberOfPages()}}</a></li>
 
   <li><a href ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">Next »</a></li>
