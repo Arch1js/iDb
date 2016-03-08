@@ -5,26 +5,26 @@ function adminCtrl($scope, $http) {
 $scope.url = '/search.php';
 
 
-$scope.addRecord = function() {
- $scope.url2 = 'addRecord.php';   
+$scope.addRecord = function(i) {
+ $scope.url = '/addRecord.php';   
     
-        var data2 = {    
-        /*make1: $scope.addmake,
-        model1: $scope.addodel*/
+        var data = {    
+        make: $scope.add.make,
+        model: $scope.add.model
         
     };
     
-    $http.post($scope.url2, data).
-		success(function(data2, status) {
-			$scope.result3 = data;
-
+    $http.post($scope.url, data).
+		success(function(data, status) {
+			$scope.result = data;
+            $scope.result.push(i);
 
 		})
     
 }
     
 $scope.adminSearch = function() {
-        
+  $scope.url = '/displayAllCars.php';       
         var data = {    
         /*make: $scope.make,
         colour: $scope.colour,
@@ -38,23 +38,30 @@ $scope.adminSearch = function() {
 		success(function(data, status) {
 			$scope.result = data;
 
-            $scope.currentPage = 0;
-            $scope.pageSize = 5;
-            $scope.data = [];
-            $scope.numberOfPages=function(){
-                
-            return Math.ceil($scope.data.length/$scope.pageSize);                
-        }
-    for (var i=0; i<data.length; i++) {
-        $scope.data.push("Item "+i);
-    }
 		})
 
 }
+
+$scope.delete_item = function(i) {
+        $scope.item = i;
+    $scope.url = '/deleteRecord.php';       
+        var data = {    
+        make: i.make     
+    };
+    $scope.result.splice($scope.result.indexOf(i), 1); //remove deleted item from view
+    $http.post($scope.url, data).
+		success(function() {
+        $scope.$apply(function(){
+      
+    });
+		}) 
+    }
+
+
 }
 
 function SearchCtrl($scope, $http) {
-	$scope.url = '/search.php'; // The url of our search
+	$scope.url = '/search.php'; 
     $scope.url2 = '/refine_search.php';
     
     $scope.hideResults = function(){
@@ -70,7 +77,7 @@ function SearchCtrl($scope, $http) {
     $scope.open = function(car) {
         $scope.carresult = car;
     }
-	// The function that will be executed on button click (ng-click="search()")
+    
     $scope.refine = function() {
         
         var data = {    

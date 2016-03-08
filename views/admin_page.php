@@ -73,15 +73,15 @@ $userRow=mysqli_fetch_array($res);
   </div>
     <div class="col-md-1 col-xs-2">
     <div class="input-group">
-      <button id="button" type="button" class="btn btn-primary" ng-click="adminSearch()">Delete record</button>
+      <button id="button" type="button" class="btn btn-primary" ng-click="delete_record = !delete_record">Delete record</button>
     </div>
   </div>
 </div>
 <div id="add_data" class="col-md-8" ng-show="add_record">
 <form class="form-inline">
   <div class="form-group">
-      <input type="text" class="form-control" ng-model="addmake" placeholder="Make">
-      <input type="text" class="form-control" ng-model="addmodel" placeholder="Model">
+      <input type="text" class="form-control" ng-model="add.make" placeholder="Make">
+      <input type="text" class="form-control" ng-model="add.model" placeholder="Model">
       <input type="text" class="form-control"  placeholder="Reg">
       <input type="text" class="form-control"  placeholder="Colour">
       <input type="text" class="form-control"  placeholder="Miles">
@@ -92,7 +92,7 @@ $userRow=mysqli_fetch_array($res);
       <input type="text" class="form-control"  placeholder="Description">
       <input type="text" class="form-control"  placeholder="Car Index">
       <input type="text" class="form-control"  placeholder="Region">
-      <button type="submit" class="btn btn-primary" ng-click="addRecord()">Add Record</button>
+      <button type="submit" class="btn btn-primary" ng-click="addRecord(search_results)">Add Record</button>
   </div>
 </form>
     </div>
@@ -111,10 +111,11 @@ $userRow=mysqli_fetch_array($res);
             <th>Description</th>
             <th>Car Index</th>
             <th>Region</th>
+            <th ng-show="delete_record"></th>
         </tr>
     </thead>  
   <tbody>
-    <tr ng:repeat="i in result | filter:search">        
+    <tr ng-model="search_results" ng-repeat="i in result | filter:search">        
         <td>{{i.make}}</td>
         <td>{{i.model}}</td>
         <td>{{i.Reg}}</td>
@@ -127,6 +128,7 @@ $userRow=mysqli_fetch_array($res);
         <td>{{i.description}}</td>
         <td>{{i.carIndex}}</td>
         <td>{{i.region}}</td>
+        <td ng-show="delete_record"><button id="delete_button" type="button" class="btn btn-danger btn-xs" ng-click="delete_item(i)">Delete</button></td>
     </tr>
   </tbody>
 </table>
