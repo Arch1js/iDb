@@ -15,14 +15,14 @@ $userRow=mysqli_fetch_array($res);
 
 <title>Welcome - <?php echo $userRow['username'];?></title>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src='https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.0/angular.min.js"></script><!-- AngularJS -->
     
 <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css'><!-- Bootstrap -->
 <link rel="stylesheet" href="../css/admin_panel.css"><!-- Stylesheet -->
 <link rel="stylesheet" href="../css/admin_style.css" type="text/css" />
+<link rel="stylesheet" href="../css/style.css">
 <!-- Services -->
 <script src="../functions.js"></script>
     
@@ -47,24 +47,19 @@ $userRow=mysqli_fetch_array($res);
             //echo '<img id="profile_image" height="300" width="300" src="data:image;base64,'.$row[2].' "> ';
             echo '<img id="profile_image" height="300" width="300" src="../Asets/photo.png">';
             ?>
-            <a href="user_logout.php?logout"><img id="log_out" src="../Asets/logout.png" alt="Sign out"></a>
+            <a href="user_logout.php?logout"><i class="fa fa-sign-out fa-2x"></i></a>
             <!--<a id="sign_out" href="../logout.php?logout"></a>-->
             
         </div>
     </div>
 </div>
-<div ng-controller="adminCtrl"><!-- Controller class -->
+<div ng-controller="adminCtrl" data-ng-init="title=true"><!-- Controller class -->
     <div id="admin_tools" class="row">
   <div class="col-md-2">
     <div class="input-group">
         <div class="input-group-addon"><i class="fa fa-search"></i></div>
         <input type="text" class="form-control" ng-model="search" placeholder="Type to Search">
       </div>
-  </div>
-  <div class="col-md-1 col-xs-2">
-    <div class="input-group">
-      <button id="button" type="button" class="btn btn-primary" ng-click="adminSearch(); title=true">Load All Data</button>
-    </div>
   </div>
     <div class="col-md-1 col-xs-2">
     <div class="input-group">
@@ -97,6 +92,13 @@ $userRow=mysqli_fetch_array($res);
 </form>
     </div>
 <table class="table table-striped" ng-show="title">
+    <ul class="pagination pull-right" ng-show="paginator">
+  <li><button class="btn btn-default" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage - 1"><i class="fa fa-angle-double-left"></i>
+      Prev</button></li>
+  <li>{{currentPage+1}}/{{numberOfPages()}}</li>
+  <li><button class="btn btn-default" ng-disabled="(currentPage + 1) == numberOfPages()" ng-click="currentPage=currentPage+1">Next <i class="fa fa-angle-double-right"></i>
+</li>
+</ul>
     <thead>
         <tr>        
             <th>Make</th>
@@ -115,7 +117,7 @@ $userRow=mysqli_fetch_array($res);
         </tr>
     </thead>  
   <tbody>
-    <tr ng-model="search_results" ng-repeat="i in result | filter:search">        
+    <tr ng-model="search_results" ng-repeat="i in result | filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">        
         <td>{{i.make}}</td>
         <td>{{i.model}}</td>
         <td>{{i.Reg}}</td>
@@ -132,7 +134,13 @@ $userRow=mysqli_fetch_array($res);
     </tr>
   </tbody>
 </table>
-  
+  <ul class="pagination pull-right" ng-show="paginator">
+  <li><button class="btn btn-default" ng-disabled="currentPage == 0" ng-click="currentPage=currentPage - 1"><i class="fa fa-angle-double-left"></i>
+      Prev</button></li>
+  <li>{{currentPage+1}}/{{numberOfPages()}}</li>
+  <li><button class="btn btn-default" ng-disabled="(currentPage + 1) == numberOfPages()" ng-click="currentPage=currentPage+1">Next <i class="fa fa-angle-double-right"></i>
+</li>
+</ul>
 </div>
 </body>
     

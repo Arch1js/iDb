@@ -7,7 +7,7 @@ require 'dbconnect.php';
 
 $objData = json_decode($data);
 
-$result = mysqli_query($mysqli, "select * from cars WHERE make='VW'");
+$result = mysqli_query($mysqli, "select * from cars");
 
 /*if($objData->colour === 'Any') {
 

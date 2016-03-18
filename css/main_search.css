@@ -9,6 +9,9 @@ body {
  background-attachment: fixed;
  background-image: url(../Asets/Main.jpg);
 }
+.navbar-brand {
+	padding: 5px 15px;
+}
 #left_pane {
   margin-top: 5px;
   border: 1px solid black;
@@ -50,14 +53,14 @@ body {
     margin-bottom: 5px;
     overflow: hidden;
 }
-.wrapper p {
-	margin-left: 20px;
-}
 
+img {
+    vertical-align: baseline;
+}
 .img-thumbnail {
-    margin: 10px;
-    height: 180px;
-    width: 180px;
+    margin-left: 10px;
+    height: 120px;
+    width: 160px;
 }
 
 #car_preview {
@@ -70,6 +73,7 @@ body {
 }
 #stats {
     margin-top: 20px;
+    margin-left: 20px;
 	display: inline-block;
     clear: both;
 }
@@ -103,3 +107,8 @@ box-shadow: 3px 3px 13px 0px rgba(0,0,0,0.75);
 #back_button, #buy_button {
 	margin: 10px;
 }
+#loading_Spinner {
+    height: 30px;
+    width: 30px;
+}
+

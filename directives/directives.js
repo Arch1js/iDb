@@ -25,3 +25,15 @@ app.directive("admin", function () {
 		templateUrl: "/views/admin_panel.php"
 	}
 });
+app.directive("buy", function () {
+	return {
+		restrict: "A",
+		templateUrl: "/views/buying_form.php"
+	}
+});
+app.directive("spinner", function () {
+	return {
+		restrict: "A",
+		templateUrl: "/views/loading_spinner.html"
+	}
+});

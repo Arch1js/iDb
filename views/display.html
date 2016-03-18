@@ -2,29 +2,25 @@
     <head>
         <meta charset="UTF-8" ng-app="carApp">
     <title>Car sales</title>
-
     </head>
     <body>
         <div id="display" class="col-md-8 col-xs-12">
             <div id="back_button">
-                <button type="button" class="btn btn-success" ng-click="showResults()"><i class="fa fa-chevron-left"></i>
+                <button type="button" class="btn btn-success" ng-click="showResults(); showPaginator()"><i class="fa fa-chevron-left"></i>
 Back</button></div>
             <div id="car_view_container">
-                <img id="car_view" ng-src="{{picture}}">
+                <img id="car_view" ng-src="{{carresult.picture}}">
             </div>
             <p><p1 id="label">Make: </p1>{{carresult.make}}</p>
             <p><p1 id="label">Model: </p1>{{carresult.model}}</p>
             <p><p1 id="label">Miles: </p1>{{carresult.miles}}</p>
             <p><p1 id="label">Price: </p1>£{{carresult.price}}</p>
-            <p><p1 id="label">Registration: </p1>{{carresult.Reg}}</p>
             <p><p1 id="label">Colour: </p1>{{carresult.colour}}</p>
-            <p><p1 id="label">Dealer: </p1>{{carresult.dealer}}</p>
             <p><p1 id="label">Town: </p1>{{carresult.town}}</p>
             <p><p1 id="label">Description: </p1>{{carresult.description}}</p>
-            <p><p1 id="label">Telephone: </p1>{{carresult.telephone}}</p>
             <p><p1 id="label">Region: </p1>{{carresult.region}}</p>
             <div id="buy_button">
-                <button type="button" class="btn btn-primary btn-lg" ng-click="showResults()"><i class="fa fa-car"></i>
+                <button type="button" class="btn btn-primary btn-lg" ng-click="transfer()"><i class="fa fa-car"></i>
 Buy</button></div>
         </div>
         

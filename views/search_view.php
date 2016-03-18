@@ -2,27 +2,7 @@
 <html ng-app="carApp">
 <head>
     <meta charset="UTF-8">
-    <title>Car sales</title>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script><!-- AngularJS -->
-    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script><!-- JQuery -->
-    <script src='https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js'></script>
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
-
-    <script src='https://http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css'></script>
-    
-    <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css'><!-- Bootstrap -->
-
-    <link rel="stylesheet" href="../css/style.css"><!-- Stylesheet -->
-      
-    <!-- Services -->
-    <script src="../functions.js"></script>
-    
-    <!-- Directives -->
-    <script src="../directives/directives.js"></script>
-    
+    <title>Car sales</title>    
 </head>
 
 <body>   
@@ -36,7 +16,7 @@
              
     <form name="formColor" class="form-inline"><!-- Min price and max price form-->
  <select ng-model="colour" class="form-control">
-     <option value="">Colour</option>
+     <option value="" selected disabled>Colour</option>
      <option value="Any">Any</option>
 <?php
      $sql = 'SELECT DISTINCT(colour) FROM cars ORDER BY colour';
@@ -76,7 +56,7 @@
 <form name="make" class="form-inline"><!-- Make and model form-->
 <div class="form-group">
  <select class="form-control" ng-model="make" ng-change="refine()">
-
+    <option selected disabled>Make</option>
      <?php
     $sql = "SELECT DISTINCT(make) FROM cars ORDER BY make";
    include_once '../dbconnect.php';
@@ -120,16 +100,16 @@
 </select>
 </form>
 <center>
-    <div><button type="submit" id="submit" type="button" ng-click="search(); showResults()">Search</button></div><!--Search button-->
+    <div><button type="submit" id="submit" type="button" ng-click="search()">Search</button></div><!--Search button-->
 </center>
           </div>
           </div>
       <div id="right_pane" class="col-md-8"><!--Start of right pane-->
-
-        <div class="results_view" ng-hide="hideme" ng-repeat="car in result | startFrom:currentPage*pageSize | limitTo:pageSize" ><!-- Display results-->
+        <div spinner></div>
+        <div class="results_view" ng-show="results" ng-repeat="car in result | startFrom:currentPage*pageSize | limitTo:pageSize" ><!-- Display results-->
  <div class="wrapper">
                   <div id="car_preview">
-                    <img class="img-thumbnail" ng-src="{{picture}}">
+                    <img class="img-thumbnail" ng-src="{{car.picture}}">
                   </div>
                   <div id="stats">
                     <p><p1 id="label">Make:</p1> {{ car.make }}</p>
@@ -141,8 +121,8 @@
                     <p>£{{ car.price | number:0}}</p>
                    </div>
                   <div id="check">
-                 <button type="button" id="button" class="btn btn-primary" ng-click="open(car); hideResults()">Check</button>
-                  </div>                     
+                 <button type="button" id="button" class="btn btn-primary" ng-click="open(car); shareMyData(car); hideResults()">Check</button>
+                  </div>
               </div>
 </div>
   
@@ -152,7 +132,7 @@
 
   <li><a href ng-disabled="currentPage >= data.length/pageSize - 1" ng-click="currentPage=currentPage+1">Next »</a></li>
 </ul>
-          <div ng-show="hideme" display></div>
+          <div ng-show="display" display></div>
      </div>
       </div>     
     </body>
