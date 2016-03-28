@@ -1,4 +1,13 @@
+@media (max-width: @screen-xs) {
+    body{font-size: 10px;}
+}
 
+@media (max-width: @screen-sm) {
+    body{font-size: 14px;}
+}
+h3 {
+  font-size: 1.6em;
+}
 * {
   font-family: 'Shift', sans-serif;
 }
@@ -15,12 +24,12 @@ body {
 #left_pane {
   margin-top: 5px;
   border: 1px solid black;
-    background-color: white;
+  background-color: white;
 }
 
 #contents_container {
-  width: 70%;
-  margin:0 auto; 
+  width: 80%;
+  margin:0 auto;
 }
 .form-control {
   margin: 10px;
@@ -57,11 +66,7 @@ body {
 img {
     vertical-align: baseline;
 }
-.img-thumbnail {
-    margin-left: 10px;
-    height: 120px;
-    width: 160px;
-}
+
 
 #car_preview {
   display: inline-block;
@@ -69,16 +74,15 @@ img {
 }
 #car_view {
     height: 50%;
-    width: 40%;
+    width: 100%;
 }
 #stats {
     margin-top: 20px;
     margin-left: 20px;
 	display: inline-block;
-    clear: both;
 }
 #price {
-    margin-left: 180px;
+  margin-top: 5%;
 	display: inline-block;
 }
 #price p {
@@ -86,10 +90,11 @@ img {
     font-weight: bold;
 }
 #check {
-    margin-top: 50px; 
-    margin-right: 10px;
+  margin-top: 5%;
 	display: inline-block;
-    float: right;
+}
+#button {
+  float:right;
 }
 p #label {
     font-weight: bold;
@@ -104,11 +109,58 @@ p #label {
 -moz-box-shadow: 3px 3px 13px 0px rgba(0,0,0,0.75);
 box-shadow: 3px 3px 13px 0px rgba(0,0,0,0.75);
 }
-#back_button, #buy_button {
-	margin: 10px;
+#back_button, #buy_button, #email_button {
+	margin: 10px 10px 10px 0px;
 }
 #loading_Spinner {
     height: 30px;
     width: 30px;
 }
 
+#dropdown {
+  float: right;
+  margin: 5px;
+  display: inline-block;
+}
+#page_size {
+  float: right;
+  display: inline-block;
+}
+#page_size .form-control {
+  margin: 5px;
+}
+#selectbtn {
+  float:right;
+}
+#sortbtn {
+  float:right;
+}
+#sort {
+  float: right;
+  display: inline-block;
+  width:100%;
+  background-color: #333;
+  border: 1px solid black;
+  border-radius: 4px;
+}
+#pagenumbers {
+  font-size: 14pt;
+	color: white;
+	font-weight: bold;
+}
+#stat1, #stat2, #stat3 {
+  margin: 2% 0% 0% 12%;
+  display: inline-block;
+}
+#buttons {
+  width:100%;
+}
+#buttons, #buy_button, #email_button {
+  display: inline-block;
+}
+#buy_button {
+  float: right;
+}
+.pagination {
+  margin: 5px 0;
+}

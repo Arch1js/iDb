@@ -37,3 +37,9 @@ app.directive("spinner", function () {
 		templateUrl: "/views/loading_spinner.html"
 	}
 });
+app.directive("breadcrumbs", function () {
+	return {
+		restrict: "A",
+		templateUrl: "/views/checkout_breadcrumbs.html"
+	}
+});

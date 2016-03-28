@@ -1,13 +1,25 @@
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
 
-body { 
+body {
 	font: normal 14px 'Open Sans', Arial, sans-serif;
-	color: #999;
-	/*background: transparent url('http://p1.pichost.me/i/20/1428758.jpg') center center no-repeat fixed;*/
+
+	background: #2BC0E4; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #2BC0E4 , #EAECC6); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to left, #2BC0E4 , #EAECC6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
-
-
-
+body #change_form  {
+	color:black;
+}
+*
+{
+	margin:0;
+	padding:0;
+}
+.form-control::-webkit-input-placeholder { color: black; }
+.form-control:-moz-placeholder { color: black; }
+.form-control::-moz-placeholder { color: black; }
+.form-control:-ms-input-placeholder { color: black; }
 :focus {
 	outline: 0;
 }
@@ -18,14 +30,15 @@ body {
 		margin: 0 auto;
 	}
 }
-*
-{
-	margin:0;
-	padding:0;
-}
 #login-form
 {
+	float:right;
 	margin-top:70px;
+	padding: 10px;
+	border: 2px solid black;
+	border-radius: 5px;
+
+
 }
 table
 {
@@ -84,10 +97,10 @@ tr td a
     color: white;
     padding-left: 35%;
 }
-a:link 
+a:link
 {
     text-decoration:none;
-    
+
 }
 #log_out
 {
@@ -147,5 +160,18 @@ a:link
     margin-left: 10px;
 }
 #admin_tools {
+	display: inline-block;
     margin: 10px;
+}
+#paginator_top {
+	display: inline-block;
+	float: right;
+}
+.pagination {
+	margin: 5px 0px;
+	float: right;
+}
+#middle {
+	float: none;
+    margin: 0 auto;
 }

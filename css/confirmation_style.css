@@ -1,0 +1,13 @@
+.col-centered{
+float: none;
+margin: 0 auto;
+}
+.breadcrumb li.third a {
+background: hsla(153, 57%, 51%, 1);
+}
+.breadcrumb li.third a:after {
+border-left: 30px solid hsla(153, 57%, 51%, 1);
+}
+ul li {
+    list-style-type: none;
+}

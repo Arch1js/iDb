@@ -3,49 +3,55 @@
     <head>
         <meta charset="UTF-8">
         <title>Car sales</title>
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script><!-- AngularJS -->    
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script><!-- AngularJS -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        
-        <link rel="stylesheet" href="../css/checkout.css"><!-- Stylesheet -->      
+
+        <link rel="stylesheet" href="../css/checkout.css"><!-- Stylesheet -->
+        <link rel="stylesheet" href="../css/breadcrumb_style.css"><!-- Stylesheet -->
         <!-- Services -->
         <script src="../functions.js"></script>
-    
+
         <!-- Directives -->
         <script src="../directives/directives.js"></script>
 </head>
     <body ng-controller="CheckoutCtrl">
     <div navbar></div><!-- Link to navigation bar html -->
     <div class="col-md-10 col-centered" ng-repeat="data in sharedData">
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <h1>Checkout</h1>
-                </div>
-            </div>
-        </nav>
-            <div id="car_container">
-                <img class="car_image " ng-src="{{data.picture}}">
-            </div>
-            <div id="stats2">
-                <p><p1 id="label">Make:</p1>{{ data.make}}</p>
-                <p><p1 id="label">Model:</p1>{{ data.model}}</p>
-                <p><p1 id="label">Registration:</p1>{{ data.Reg}}</p>
-                <p><p1 id="label">Colour:</p1>{{ data.colour}}</p>
-                <p><p1 id="label">Miles:</p1>{{ data.miles}}</p>
-                <p><p1 id="label">Price:</p1>{{ data.price}}</p>
-                <p><p1 id="label">Dealer:</p1>{{ data.dealer}}</p>
-                <p><p1 id="label">Town:</p1>{{ data.town}}</p>
-                <p><p1 id="label">Telephone:</p1>{{ data.telephone}}</p>
-                <p><p1 id="label">Description:</p1>{{ data.description}}</p>
-                <p><p1 id="label">Region:</p1>{{ data.region}}</p>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <div breadcrumbs></div>
         </div>
-        <div id="checkout">
-            <div buy></div>
+    <div class="panel-body">
+      <div id="car_container" class="col-md-4 col-xs-12">
+          <img class="car_image " ng-src="{{data.picture}}">
+      </div>
+        <div id="stats2" class="col-md-6 col-xs-12">
+          <div class="col-md-4">
+          <h3 id="label">Make:</h3><h5>{{ data.make}}</h5>
+          <h3 id="label">Model:</h3><h5>{{ data.model}}</h5>
+          <h3 id="label">Colour:</h3><h5>{{ data.colour}}</h5>
+          <h3 id="label">Price:</h3><h5>£{{ data.price | number:0}}</h5>
         </div>
+        <div class="col-md-4">
+          <h3 id="label">Registration:</h3><h5>{{ data.Reg}}</h5>
+          <h3 id="label">Miles:</h3><h5>{{ data.miles}}</h5>
+          <h3 id="label">Dealer:</h3><h5>{{ data.dealer}}</h5>
+          <h3 id="label">Town:</h3><h5>{{ data.town}}</h5>
+        </div>
+        <div class="col-md-4">
+          <h3 id="label">Telephone:</h3><h5>{{ data.telephone}}</h5>
+          <h3 id="label">Description:</h3><h5>{{ data.description}}</h5>
+          <h3 id="label">Region:</h3><h5>{{ data.region}}</h5>
+        </div>
+    </div>
+    <div id="checkout" class="col-md-12">
+    <div buy></div>
+</div>
+  </div>
         </div>
     </body>
 </html>

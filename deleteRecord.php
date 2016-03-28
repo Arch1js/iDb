@@ -7,6 +7,9 @@ require 'dbconnect.php';
 
 $objData = json_decode($data);
 
-$addRecord = mysqli_query($mysqli, "DELETE FROM cars WHERE make='$objData->make'");
+$sql="DELETE FROM cars WHERE CarIndex=?";
+$stmt = $mysqli->prepare($sql);
+$stmt->bind_param("i", $objData->index);
+$stmt->execute();
 
 ?>
