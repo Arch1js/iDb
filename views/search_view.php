@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Car sales</title>
+    <link rel="icon" href="../Asets/Logo.svg">
 </head>
 
 <body>
 <div ng-controller="SearchCtrl"><!-- Controller class -->
   <div id="contents_container"><!-- start of contents container -->
       <div id="left_pane" class="col-md-3 col-xs-12"><!-- left search pane -->
-        <div id="search_container" class="col-md-10 col-xs-12 col-centered"><!-- Search container -->
+        <div id="search_container" class="col-md-12 col-xs-12 col-centered"><!-- Search container -->
         <center>
      </center>
 
@@ -44,7 +45,7 @@
   <option value="10000">Up to 10000 miles</option>
   <option value="20000">Up to 20000 miles</option>
   <option value="50000">Up to 50000 miles</option>
-  <option value="750000">Up to 75000 miles</option>
+  <option value="75000">Up to 75000 miles</option>
   <option value="100000">Up to 100000 miles</option>
     <option value="100000">More than 100000 miles</option>
 </select>
@@ -72,9 +73,12 @@
 
 ?>
 </select>
-<select class="form-control" ng-model="carmodel" ng-options="car.model for car in result2 | unique: 'model'">
+<!-- <select class="form-control" ng-model="carmodel" ng-options="car.model for car in result2 | unique: 'model'">
   <option value="" selected>Model</option>
-</select>
+</select> -->
+<select class="form-control" ng-model="carmodel" ng-init="carmodel='Any'">
+  <option value="Any">Model</option>
+  <option ng-repeat="i in result2 | unique: 'model'" value="{{i.model}}">{{i.model}}</option>
 </select>
 </div>
 </form>
@@ -121,10 +125,10 @@
         </div>
         <div id="page_size" class="col-md-2 col-xs-12">
         <form class="form-inline" id="selectbtn">
-        <div class="form-group" ng-model="pages" ng-change="">
+        <div class="form-group" ng-model="pages">
           <label></label>
             <select class="form-control">
-              <option value="5">5</option>
+              <option value="5" ng-model="five">5</option>
               <option value="10">10</option>
               <option value="15">15</option>
             </select>

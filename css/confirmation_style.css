@@ -1,3 +1,6 @@
+body {
+  background-image: url(../Asets/Main.jpg);
+}
 .col-centered{
 float: none;
 margin: 0 auto;

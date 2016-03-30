@@ -5,57 +5,68 @@ $paypal_id = 'a.dobrajs-facilitator@gmail.com'; //Business Email
 
 ?>
 <div ng-controller="CheckoutCtrl">
-<div class="col-md-4 col-xs-12">
-<form class="form-inline">
-  <div class="form-group">
-    <label for="exampleInputName2">First Name</label>
-    <input type="text" class="form-control" placeholder="John" ng-model="name">
+<div class="col-md-2 col-xs-12">
+<form class="form-inline" id="customer-form">
+  <div class="control-group">
+    <label class="control-label" for="name">First Name</label>
+    <div class="controls">
+    <input type="text" class="form-control" placeholder="John" ng-model="name" name="name" id="name">
   </div>
-</form>
-<form class="form-inline">
-  <div class="form-group">
-    <label for="exampleInputEmail2">Last Name</label>
-    <input type="text" class="form-control" placeholder="Doe" ng-model="lastName">
   </div>
-</form>
-<form class="form-inline">
-  <div class="form-group">
-    <label for="exampleInputEmail2">Address</label>
-    <input type="text" class="form-control" placeholder="Address" ng-model="address">
+  <div class="control-group">
+    <label class="control-label" for="last">Last Name</label>
+    <div class="controls">
+    <input type="text" class="form-control" placeholder="Doe" ng-model="lastName" name="last" id="last">
   </div>
-</form>
-<form class="form-inline">
-  <div class="form-group">
-    <label for="exampleInputEmail2">Email</label>
-    <input type="email" class="form-control" placeholder="test@example.com" ng-model="email">
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="address">Address</label>
+    <div class="controls">
+    <input type="text" class="form-control" placeholder="Address" ng-model="address" name="address" id="address">
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="email">Email</label>
+    <div class="controls">
+    <input type="email" class="form-control" placeholder="test@example.com" ng-model="email" name="email" id="email">
+    </div>
   </div>
 </form>
 </div>
-<div class="col-md-4 col-xs-12">
-<form class="form-inline">
-<div class="form-group">
-    <label for="cardNumber">Credit Card number</label>
-        <input type="text" class="form-control" id="cardNumber" maxlength="16" size="18" autocomplete='off' ng-model="cardNo">
+<div class="col-md-2 col-xs-12">
+<form class="form-inline" id="customer-form2">
+<div class="control-group">
+    <label class="control-label" for="card">Credit Card number</label>
+    <div class="controls">
+        <input type="text" class="form-control" id="cardNumber" maxlength="16" size="18" autocomplete='off' ng-model="cardNo" name="card" id="card">
+</div>
+</div>
+<div class="control-group">
+    <label class="control-label" for="month">Expiry date</label>
+    <div class="controls">
+        <input type="text" class="form-control" placeholder="MM" maxlength="2" size="2" autocomplete='off' ng-model="month" name="month" id="month">
+        <input type="text" class="form-control" placeholder="YY" maxlength="2" size="2" autocomplete='off' ng-model="year" name="year" id="year">
+</div>
+</div>
+
+<div class="control-group">
+    <label class="control-label" for="cvv">CVV</label>
+    <div class="controls">
+        <input type="text" class="form-control" placeholder="CVV" maxlength="3" size="3" autocomplete='off' ng-model="cvv" name="cvv" id="cvv">
+</div>
 </div>
 </form>
-<form class="form-inline">
-<div class="form-group">
-    <label>Expiry date</label>
-        <input type="text" class="form-control" placeholder="MM" maxlength="2" size="2" autocomplete='off' ng-model="month">
-        <input type="text" class="form-control" placeholder="YY" maxlength="2" size="2" autocomplete='off' ng-model="year">
-</div>
-</form>
-<form class="form-inline">
-<div class="form-group">
-    <label>CVV</label>
-        <input type="text" class="form-control" placeholder="CVV" maxlength="3" size="3" autocomplete='off' ng-model="cvv">
-</div>
-</form>
-	<div class="form-group"> <!-- Submit Button -->
+	<div class="control-group"> <!-- Submit Button -->
 		<!--<button type="submit" class="btn btn-primary" ng-click="addCustomerInfo()"><i class="fa fa-cart-arrow-down"></i>
  Place Order</button>-->
-        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-cart-arrow-down"></i>
- Place Order</button>
+        <!-- <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-cart-arrow-down"></i>
+ Place Order</button> -->
+ <div class="form-actions">
+ <button type="submit" id="submit" class="btn btn-primary" data-target="#myModal"><i class="fa fa-cart-arrow-down"></i>
+Place Order</button>
+</div>
 	</div>
 </div>
 <div class="col-md-4 col-xs-12">

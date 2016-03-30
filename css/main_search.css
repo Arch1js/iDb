@@ -70,15 +70,14 @@ img {
 
 #car_preview {
   display: inline-block;
-
 }
 #car_view {
     height: 50%;
     width: 100%;
 }
 #stats {
-    margin-top: 20px;
-    margin-left: 20px;
+    margin-top: 10px;
+    margin-left: 10px;
 	display: inline-block;
 }
 #price {

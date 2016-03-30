@@ -23,7 +23,7 @@ $userRow=mysqli_fetch_array($res);
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"><!-- Bootstrap -->
 <link rel="stylesheet" href="../css/admin_panel.css"><!-- Stylesheet -->
 <link rel="stylesheet" href="../css/admin_style.css" type="text/css" />
-<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/loader_animation.css"><!-- Stylesheet -->
 <!-- Services -->
 <script src="../functions.js"></script>
 
@@ -124,7 +124,7 @@ $userRow=mysqli_fetch_array($res);
 </div>
 <table class="table table-striped" ng-show="title" ng-init="displayAllData()">
 <div class="modal_container">
-	<!-- Edit Modal -->
+	<!-- Add Modal -->
 	<div class="modal fade" id="addModal" role="dialog">
 			<div class="modal-dialog modal-lg">
 	<!-- Modal content-->
@@ -137,27 +137,35 @@ $userRow=mysqli_fetch_array($res);
 		<form class="form-inline">
 		<div id="change_form" class="form-group">
 		<label for="make">Make: </label>
-		<input type="text" class="form-control" ng-model="add.make"/>
+		<input type="text" class="form-control" maxlength="10" ng-model="add.make"/>
 		<label for="make">Model: </label>
-		<input type="text" class="form-control" ng-model="add.model"/>
+		<input type="text" class="form-control" maxlength="15" ng-model="add.model"/>
 		<label for="make">Registration: </label>
-		<input type="text" class="form-control" ng-model="add.reg"/>
+		<input type="text" class="form-control" maxlength="1" ng-model="add.reg"/>
 		<label for="make">Colour: </label>
-		<input type="text" class="form-control" ng-model="add.colour"/>
+		<input type="text" class="form-control" maxlength="10" ng-model="add.colour"/>
 		<label for="make">Miles: </label>
-		<input type="text" class="form-control" ng-model="add.miles"/>
+		<input type="text" class="form-control" maxlength="6" ng-model="add.miles"/>
 		<label for="make">Price: </label>
-		<input type="text" class="form-control" ng-model="add.price"/>
+		<input type="text" class="form-control" maxlength="11" ng-model="add.price"/>
 		<label for="make">Dealer: </label>
-		<input type="text" class="form-control" ng-model="add.dealer"/>
+		<input type="text" class="form-control" maxlength="50" ng-model="add.dealer"/>
 		<label for="make">Town: </label>
-		<input type="text" class="form-control" ng-model="add.town"/>
+		<input type="text" class="form-control" maxlength="20" ng-model="add.town"/>
 		<label for="make">Telephone: </label>
-		<input type="text" class="form-control" ng-model="add.tel"/>
-		<label for="make">Description: </label>
-		<input type="text" class="form-control" ng-model="add.desc"/>
+		<input type="text" class="form-control" maxlength="15" ng-model="add.tel"/>
 		<label for="make">Region: </label>
-		<input type="text" class="form-control" ng-model="add.region"/>
+		<input type="text" class="form-control" maxlength="10" ng-model="add.region"/>
+		<label for="make">Path to image: </label>
+		<input type="text" class="form-control" maxlength="45" ng-model="add.picture"/>
+		<label for="make">Status: </label>
+		<select class="form-control" ng-model="add.status">
+			<option value="available" selected>Available</option>
+			<option value="on-hold">On-hold</option>
+			<option value="unavailable">Unavailable</option>
+		</select>
+		<label for="make">Description: </label>
+		<textarea type="text" class="form-control" maxlength="30" ng-model="add.desc" rows="4" cols="50"></textarea>
 	</div>
 </form>
 	</div>
@@ -182,29 +190,37 @@ $userRow=mysqli_fetch_array($res);
 					<form class="form-inline">
 					<div id="change_form" class="form-group">
 					<label for="make">Make: </label>
-					<input type="text" class="form-control" ng-model="record.make"/>
+					<input type="text" class="form-control" maxlength="10" ng-model="record.make"/>
 					<label for="make">Model: </label>
-					<input type="text" class="form-control" ng-model="record.model"/>
+					<input type="text" class="form-control" maxlength="15" ng-model="record.model"/>
 					<label for="make">Registration: </label>
-					<input type="text" class="form-control" ng-model="record.Reg"/>
+					<input type="text" class="form-control" maxlength="1" ng-model="record.Reg"/>
 					<label for="make">Colour: </label>
-					<input type="text" class="form-control" ng-model="record.colour"/>
+					<input type="text" class="form-control" maxlength="10" ng-model="record.colour"/>
 					<label for="make">Miles: </label>
-					<input type="text" class="form-control" ng-model="record.miles"/>
+					<input type="text" class="form-control" maxlength="6" ng-model="record.miles"/>
 					<label for="make">Price: </label>
-					<input type="text" class="form-control" ng-model="record.price"/>
+					<input type="text" class="form-control" maxlength="11" ng-model="record.price"/>
 					<label for="make">Dealer: </label>
-					<input type="text" class="form-control" ng-model="record.dealer"/>
+					<input type="text" class="form-control" maxlength="50" ng-model="record.dealer"/>
 					<label for="make">Town: </label>
-					<input type="text" class="form-control" ng-model="record.town"/>
+					<input type="text" class="form-control" maxlength="20" ng-model="record.town"/>
 					<label for="make">Telephone: </label>
-					<input type="text" class="form-control" ng-model="record.telephone"/>
-					<label for="make">Description: </label>
-					<input type="text" class="form-control" ng-model="record.description"/>
+					<input type="text" class="form-control" maxlength="15" ng-model="record.telephone"/>
 					<label for="make">Region: </label>
-					<input type="text" class="form-control" ng-model="record.region"/>
+					<input type="text" class="form-control" maxlength="10" ng-model="record.region"/>
+					<label for="make">Path to image: </label>
+					<input type="text" class="form-control" maxlength="45" ng-model="record.picture"/>
+					<label for="make">Status: </label>
+					<select class="form-control" ng-model="record.status">
+						<option value="available" selected>Available</option>
+						<option value="on-hold">On-hold</option>
+						<option value="unavailable">Unavailable</option>
+					</select>
 					<label for="make">Index: </label>
 					<input type="text" class="form-control" ng-model="record.carIndex"/>
+					<label for="make">Description: </label>
+					<textarea type="text" class="form-control" maxlength="30" ng-model="record.description" rows="4" cols="50"></textarea>
 				</div>
 			</form>
 				</div>
@@ -231,7 +247,9 @@ $userRow=mysqli_fetch_array($res);
             <th>Description</th>
             <th ng-click="sort('carIndex')">Car Index <span class="glyphicon sort-icon" ng-show="sortKey=='carIndex'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
             <th ng-click="sort('region')">Region <span class="glyphicon sort-icon" ng-show="sortKey=='region'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
-            <th ng-show="delete_record"></th>
+						<th ng-click="sort('status')">Status <span class="glyphicon sort-icon" ng-show="sortKey=='status'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-click="sort('picture')">Picture <span class="glyphicon sort-icon" ng-show="sortKey=='picture'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+						<th ng-show="delete_record"></th>
         </tr>
     </thead>
   <tbody>
@@ -271,11 +289,14 @@ $userRow=mysqli_fetch_array($res);
         <td>{{i.description}}</td>
         <td>{{i.carIndex}}</td>
         <td>{{i.region}}</td>
+				<td>{{i.status}}</td>
+				<td>{{i.picture}}</td>
         <td ng-show="delete_record"><button id="delete_button" type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteModal" ng-click="open(i)">Delete</button></td>
 				<td ng-show="edit_record"><button id="edit_button" type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editModal" ng-click="open(i)">Edit</button></td>
-    </tr>
+		</tr>
   </tbody>
 </table>
+<div spinner></div>
 <pagination ng-show="paginator" total-items="result.length" items-per-page="pageSize" ng-model="currentPage" max-size="5" class="pagination-sm"></pagination>
 </div>
 </body>

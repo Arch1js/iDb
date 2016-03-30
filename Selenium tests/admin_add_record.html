@@ -4,16 +4,26 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>admin_add_record</title>
+<title>add_record_admin</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">admin_add_record</td></tr>
+<tr><td rowspan="1" colspan="3">add_record_admin</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
 	<td>/views/admin_page.php</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=addModal</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>xpath=(//button[@type='button'])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -22,68 +32,63 @@
 	<td>test</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>id=button</td>
-	<td></td>
+	<td>type</td>
+	<td>xpath=(//input[@type='text'])[13]</td>
+	<td>test</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[@type='text'])[2]</td>
-	<td>Test_make</td>
+	<td>xpath=(//input[@type='text'])[14]</td>
+	<td>test2</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[@type='text'])[3]</td>
-	<td>Test_model</td>
+	<td>xpath=(//input[@type='text'])[15]</td>
+	<td>A</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[@type='text'])[4]</td>
-	<td>SJ51TTU</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>xpath=(//input[@type='text'])[5]</td>
+	<td>xpath=(//input[@type='text'])[16]</td>
 	<td>black</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[@type='text'])[6]</td>
+	<td>xpath=(//input[@type='text'])[17]</td>
 	<td>12000</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[@type='text'])[7]</td>
-	<td>20000</td>
+	<td>xpath=(//input[@type='text'])[18]</td>
+	<td>1000</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[@type='text'])[8]</td>
+	<td>xpath=(//input[@type='text'])[19]</td>
 	<td>Test_dealer</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[@type='text'])[9]</td>
+	<td>xpath=(//input[@type='text'])[20]</td>
 	<td>Peterborough</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[@type='text'])[10]</td>
-	<td>02228459362</td>
+	<td>xpath=(//input[@type='text'])[21]</td>
+	<td>04445845065</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>xpath=(//input[@type='text'])[11]</td>
-	<td>new</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>xpath=(//input[@type='text'])[12]</td>
+	<td>xpath=(//input[@type='text'])[22]</td>
 	<td>SW</td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>//textarea[@type='text']</td>
+	<td>Clean and tidy</td>
+</tr>
+<tr>
 	<td>click</td>
-	<td>css=div.form-group &gt; button.btn.btn-primary</td>
+	<td>css=button.btn.btn-success</td>
 	<td></td>
 </tr>
 

@@ -10,9 +10,10 @@ function confirmCtrl($scope, $http, srvShareData) {
 
 function adminCtrl($scope, $http, $filter) {
 	$scope.url = '/search.php';
-
+$scope.loading = true;
 	$scope.url2 = '/displayAllCars.php';
 	$scope.displayAllData=function(){
+
 	$http.post($scope.url2, data).
 			success(function(data, status) {
 							$scope.result = data;
@@ -24,6 +25,7 @@ function adminCtrl($scope, $http, $filter) {
 	        $scope.data.push(i);
 	    }
 				$scope.paginator = true;
+				$scope.loading = false;
 			});
 		};
 
@@ -57,6 +59,8 @@ $scope.addRecord = function(i) {
 				town: $scope.add.town,
 				telephone: $scope.add.tel,
 				description: $scope.add.desc,
+				picture: $scope.add.picture,
+				status: $scope.add.status,
 				region: $scope.add.region,
     };
 
@@ -82,6 +86,8 @@ $scope.updateRecord = function(record) {
 				telephone: $scope.record.telephone,
 				description: $scope.record.description,
 				region: $scope.record.region,
+				status: $scope.record.status,
+				picture: $scope.record.picture,
 				index: $scope.record.carIndex,
     };
 
@@ -185,6 +191,7 @@ function SearchCtrl($scope, $http, srvShareData, $location, $filter) {
         colour: $scope.colour,
         milage: $scope.milage,
         // carmodel: $scope.carmodel.model,
+				carmodel: $scope.carmodel,
         minprice: $scope.minprice,
         maxprice: $scope.maxprice,
     };
@@ -196,7 +203,7 @@ function SearchCtrl($scope, $http, srvShareData, $location, $filter) {
 			$scope.result = data;
 
 						$scope.currentPage = 1;
-						$scope.pageSize = 8;
+						$scope.pageSize = 5;
             $scope.data = [];
 
     for (var i=0; i<data.length; i++) {
@@ -228,6 +235,91 @@ function SearchCtrl($scope, $http, srvShareData, $location, $filter) {
 function CheckoutCtrl($scope, $http, srvShareData) {
 
 $scope.sharedData = srvShareData.getData();
+
+$(document).ready(function(){
+$("#customer-form, #customer-form2").validate({
+			 rules: {
+					 name: {
+							 minlength: 1,
+							 required: true
+					 },
+					 last: {
+							 minlength: 1,
+							 required: true
+					 },
+					 address: {
+							 minlength: 1,
+							 required: true
+					 },
+					 email: {
+							 minlength: 1,
+							 required: true
+					 },
+					 card: {
+							 minlength: 16,
+							 required: true
+					 },
+					 month: {
+							 minlength: 2,
+							 required: true
+					 },
+					 year: {
+							 minlength: 2,
+							 required: true
+					 },
+					 cvv: {
+							 minlength: 3,
+							 required: true
+					 }
+
+			 },
+			 highlight: function(element) {
+	$(element).closest('.control-group').removeClass('has-success').addClass('has-error');
+	$('#submit').addClass('disabled');
+	// $('#submit').removeAttr("data-toggle", "modal");
+},
+success: function(element) {
+	element
+
+	.closest('.control-group').removeClass('has-error').addClass('has-success');
+	$('#submit').removeClass('disabled');
+	// $('#submit').attr("data-toggle", "modal");
+}
+});
+$("#customer-form2").validate({
+			 rules: {
+					 card: {
+							 minlength: 16,
+							 required: true
+					 },
+					 month: {
+							 minlength: 2,
+							 required: true
+					 },
+					 year: {
+							 minlength: 2,
+							 required: true
+					 },
+					 cvv: {
+							 minlength: 3,
+							 required: true
+					 }
+
+			 },
+			 highlight: function(element) {
+	$(element).closest('.control-group').removeClass('has-success').addClass('has-error');
+	$('#submit').addClass('disabled');
+	$('#submit').removeAttr("data-toggle", "modal");
+},
+success: function(element) {
+	element
+
+	.closest('.control-group').removeClass('has-error').addClass('has-success');
+	$('#submit').removeClass('disabled');
+	$('#submit').attr("data-toggle", "modal");
+}
+});
+ });
 
 $scope.addCustomerInfo = function() {
  $scope.url = '/addCustomerInfo.php';
@@ -262,7 +354,8 @@ $scope.sendEmail = function() {
 		success(function(data, status) {
 			$scope.result = data;
 		})
-}
+};
+
 };
 
 app.service('srvShareData', function($window) {
