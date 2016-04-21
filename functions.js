@@ -9,41 +9,59 @@ function confirmCtrl($scope, $http, srvShareData) {
 }
 
 function adminCtrl($scope, $http, $filter) {
-	$scope.url = '/search.php';
-$scope.loading = true;
+	var data = {
+
+	};
+	$scope.currentPage = 1;
+	// $scope.loadMore = [];
+		$scope.data = [];
+	$scope.data2 = [];
+
 	$scope.url2 = '/displayAllCars.php';
-	$scope.displayAllData=function(){
 
-	$http.post($scope.url2, data).
-			success(function(data, status) {
-							$scope.result = data;
-							$scope.currentPage = 1;
-	            $scope.pageSize = 45;
-	            $scope.data = [];
+$scope.displayData=function(page){
+	$scope.currentPage = page;
+	$scope.loading = true;
+	$scope.paginator = false;
+	$scope.perpage=false;
 
-	    for (var i=0; i<data.length; i++) {
-	        $scope.data.push(i);
-	    }
-				$scope.paginator = true;
-				$scope.loading = false;
-			});
+		var incr = $scope.pageSizeInput * $scope.currentPage;
+		$scope.first = 0;
+			var data = {
+				quick: $scope.quicksearch,
+				set:$scope.first,
+				dataCount: incr,
+				make: $scope.search.make,
+				model: $scope.search.model,
+				reg:  $scope.search.Reg,
+				colour:  $scope.search.colour,
+				milage: $scope.search.miles,
+				price:  $scope.search.price
+	};
+
+		$http.post($scope.url2, data).
+				success(function(data,status) {
+					// if(!$scope.data.length) {
+					// 	$scope.data= data[0];
+					// }
+					// else {
+					// 	$scope.loadMore = data[0];
+					// 	$scope.data = $scope.data.concat($scope.loadMore);
+					// }
+								$scope.data= data[0];
+								$scope.data2 = data[1];
+								$scope.numberOfItems = $scope.data2[0].count;
+
+					$scope.paginator = true;
+					$scope.loading = false;
+					$scope.perpage=true;
+				});
 		};
 
-	var data = {
-};
 $scope.sort = function(keyname){
 			$scope.sortKey = keyname;   //set the sortKey to the param passed
 			$scope.reverse = !$scope.reverse; //if true make it false and vice versa
 	}
-$scope.hideEdit = function() {
-	$scope.edit_record = false;
-}
-$scope.hideDelete = function() {
-	$scope.delete_record = false;
-}
-$scope.hideAdvanced = function() {
-	$scope.advanced = false;
-}
 
 $scope.addRecord = function(i) {
  $scope.url = '/addRecord.php';
@@ -95,7 +113,6 @@ $scope.updateRecord = function(record) {
 		success(function(data, status) {
 
 		})
-// $scope.result.push(data);
 
 }
 $scope.open = function(i) {
@@ -120,11 +137,23 @@ $scope.delete_item = function(i) {
 
 function SearchCtrl($scope, $http, srvShareData, $location, $filter) {
 
+	$scope.currentPage = 1;
+	$scope.data = [];
+	$scope.data2 = [];
+
+	$scope.url = '/search.php';
+		$scope.url2 = '/refine_search.php';
+
 	$scope.sendEmail = function() {
 	    $scope.url = '/sendEmail.php';
 
 	        var data = {
-	        email: $scope.userEmail
+	        email: $scope.userEmail,
+					make: $scope.carresult.make,
+					model: $scope.carresult.model,
+					miles: $scope.carresult.miles,
+					price: $scope.carresult.price,
+					colour: $scope.carresult.colour
 	    };
 
 	    $http.post($scope.url, data).
@@ -145,9 +174,6 @@ function SearchCtrl($scope, $http, srvShareData, $location, $filter) {
   $scope.transfer = function() {
       window.location.href = "checkout.html";
   }
-
-	$scope.url = '/search.php';
-    $scope.url2 = '/refine_search.php';
 
     $scope.hideResults = function(){
      $scope.results = false;
@@ -180,55 +206,39 @@ function SearchCtrl($scope, $http, srvShareData, $location, $filter) {
     })
     }
 
-	$scope.search = function() {
-				$scope.sortTools = false;
-        $scope.error = false;
-        $scope.results = false;
-        $scope.display = false;
-        $scope.paginator = false;
-        var data = {
-        make: $scope.make,
-        colour: $scope.colour,
-        milage: $scope.milage,
-        // carmodel: $scope.carmodel.model,
-				carmodel: $scope.carmodel,
-        minprice: $scope.minprice,
-        maxprice: $scope.maxprice,
-    };
-        $scope.loading = true;
+		$scope.search=function(page){
+			$scope.url2 = '/search.php';
+			$scope.currentPage = page;
+				var incr = $scope.pageSizeInput2 * $scope.currentPage;
+				$scope.first = 0;
+					var data = {
+						dataCount: incr,
+						make: $scope.make,
+		        colour: $scope.colour,
+		        milage: $scope.milage,
+						carmodel: $scope.carmodel,
+		        minprice: $scope.minprice,
+		        maxprice: $scope.maxprice
+			};
 
-		$http.post($scope.url, data).
+				$http.post($scope.url2, data).
+						success(function(data,status) {
+							$scope.sortTools = true;
+							$scope.error = false;
+							$scope.results = true;
+							$scope.display = false;
+							$scope.paginator = true;
+							$scope.pages = true;
 
-		success(function(data, status) {
-			$scope.result = data;
+										$scope.data = data[0];
+										$scope.data2 = data[1];
+										$scope.numberOfItems = $scope.data2[0].count;
 
-						$scope.currentPage = 1;
-						$scope.pageSize = 5;
-            $scope.data = [];
-
-    for (var i=0; i<data.length; i++) {
-        $scope.data.push(i);
-    }
-		$scope.totalItems = $scope.data.length;
-            if($scope.result == "") {
-                $scope.error = true;
-            }
-            else {
-                $scope.error = false;
-                $scope.results = true;
-                $scope.paginator = true;
-								$scope.sortTools = true;
-            }
-            $scope.loading = false;
-		})
-        .catch(function(err) {
-            $scope.error = true;
-        })
-
-	};
-	// $scope.setPage = function () { //For bootstrap pagination
-	//         $scope.currentPage = this.n;
-	//     };
+							// $scope.paginator = true;
+							// $scope.loading = false;
+							// $scope.perpage=true;
+						});
+				};
 
 };
 
@@ -333,7 +343,6 @@ $scope.addCustomerInfo = function() {
         month: $scope.month,
         year: $scope.year,
         cvv: $scope.cvv
-
     };
 
     $http.post($scope.url, data).
@@ -409,7 +418,11 @@ app.filter('start', function () {
         return input.slice(start);
     };
 });
-
+app.filter('roundup', function () {
+        return function (value) {
+            return Math.ceil(value);
+        };
+    });
 // app.filter('startFrom', function() {
 //     return function(input, start) {
 //         start = +start; //parse to int

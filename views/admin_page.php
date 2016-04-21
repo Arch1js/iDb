@@ -13,17 +13,18 @@ $userRow=mysqli_fetch_array($res);
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Welcome - <?php echo $userRow['username'];?></title>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.js"></script><!-- AngularJS -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<script data-require="ui-bootstrap@*" data-semver="0.10.0" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.js"></script>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"><!-- Bootstrap -->
-<link rel="stylesheet" href="../css/admin_panel.css"><!-- Stylesheet -->
+<link rel="stylesheet" href="../dependencies/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href="../dependencies/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="../css/admin_style.css" type="text/css" />
 <link rel="stylesheet" href="../css/loader_animation.css"><!-- Stylesheet -->
+
+<script src="../dependencies/angular.min.js"></script><!-- AngularJS -->
+<script src="../dependencies/ui-bootstrap-tpls-1.2.5.js"></script>
+<script src="../dependencies/jquery-2.2.2.min.js"></script>
+<script src="../dependencies/bootstrap/js/bootstrap.min.js"></script>
+<script src="../dependencies/jquery.validate.min.js"></script>
+
 <!-- Services -->
 <script src="../functions.js"></script>
 
@@ -56,73 +57,84 @@ $userRow=mysqli_fetch_array($res);
 </div>
 <div ng-controller="adminCtrl" data-ng-init="title=true"><!-- Controller class -->
 	<div class="col-md-12">
-    <div id="admin_tools" class="col-md-8 col-xs-12">
+    <div id="admin_tools" class="col-md-7 col-xs-12">
   <div class="col-md-3 col-xs-12">
     <div class="input-group">
-        <div class="input-group-addon"><i class="fa fa-search"></i></div>
-        <input type="text" class="form-control" ng-model="search" placeholder="TYPE HERE TO SEARCH">
+        <input id="qicksearch" type="text" class="form-control" ng-model="quicksearch" ng-init="quicksearch=''" value="" placeholder="Enter keyword">
+				<div ng-click="displayData(1)" class="input-group-addon"><i class="fa fa-search"></i></div>
       </div>
   </div>
-	<div class="col-md-2 col-xs-12">
+	<div class="col-md-3 col-xs-12">
 	<div class="input-group">
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchModal" ng-click="advanced = !advanced; hideEdit(); hideDelete()">Advanced search</button>
 	</div>
 </div>
     <div class="col-md-2 col-xs-12">
     <div class="input-group">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal" ng-click="hideEdit(); hideDelete(); hideAdvanced()">Add record</button>
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addModal" ng-click="hideEdit(); hideDelete(); hideAdvanced()">Add record</button>
     </div>
   </div>
 	<div class="col-md-2 col-xs-12">
 	<div class="input-group">
-		<button type="button" class="btn btn-primary" ng-click="delete_record = !delete_record; hideEdit(); hideAdvanced()">Delete record</button>
+		<button type="button" class="btn btn-warning"  ng-click="displayData(1)">Load all data</button>
 	</div>
 </div>
-	<div class="col-md-2 col-xs-12">
-	<div class="input-group">
-		<button type="button" class="btn btn-primary" ng-click="edit_record = !edit_record; hideDelete(); hideAdvanced()">Edit</button>
-	</div>
+<div class="col-md-2 col-xs-12">
+	<select class="form-control" ng-model="pageSizeInput" ng-init="pageSizeInput='10'" ng-change="displayData(currentPage)" ng-show="perpage">
+	    <option value="10" selected>10</option>
+	    <option value="25">25</option>
+	    <option value="50">50</option>
+	    <option value="100">100</option>
+	</select>
 </div>
 </div>
 <div id="paginator_top" ng-show="paginator" class="col-md-3">
-<pagination total-items="result.length" items-per-page="pageSize" ng-model="currentPage" max-size="5" class="pagination-sm"></pagination>
-</div>
+	<div id="pageCounter">
+	<p>Page {{currentPage}} of {{numberOfItems/pageSizeInput | roundup}}</p>
+	</div>
+<pagination total-items="numberOfItems" items-per-page="pageSizeInput"  ng-change="displayData(currentPage)" ng-model="currentPage" max-size="5" class="pagination-sm"></pagination>
 </div>
 <div class="col-md-12 col-xs-12" id="advanced_search" ng-show="advanced">
 <form class="form-inline">
 <div id="change_form" class="form-group">
 <label for="make">Make: </label>
-<input type="text" class="form-control" ng-model="search.make"/>
+<input type="text" class="form-control" ng-init="search.make=''" value="" ng-model="search.make"/>
 <label for="make">Model: </label>
-<input type="text" class="form-control" ng-model="search.model"/>
+<input type="text" class="form-control" ng-init="search.model=''" value="" ng-model="search.model"/>
 <label for="make">Registration: </label>
-<input type="text" class="form-control" ng-model="search.Reg"/>
+<input type="text" class="form-control" ng-init="search.Reg=''" value="" ng-model="search.Reg"/>
 <label for="make">Colour: </label>
-<input type="text" class="form-control" ng-model="search.colour"/>
+<input type="text" class="form-control" ng-init="search.colour=''" value="" ng-model="search.colour"/>
 <label for="make">Miles: </label>
-<input type="text" class="form-control" ng-model="search.miles"/>
+<input type="text" class="form-control" ng-init="search.miles=''" value="" ng-model="search.miles"/>
 <label for="make">Price: </label>
-<input type="text" class="form-control" ng-model="search.price"/>
+<input type="text" class="form-control" ng-init="search.price=''" value="" ng-model="search.price"/>
+</div>
+<div class="input-group">
+	<button type="button" class="btn btn-primary" ng-click="displayData(1)">Search</button>
 </div>
 </form>
 <br>
-<form class="form-inline">
+<!-- <form class="form-inline">
 <div id="change_form" class="form-group">
 <label for="make">Dealer: </label>
-<input type="text" class="form-control" ng-model="search.dealer"/>
+<input type="text" class="form-control" ng-init="search.dealer=''" value="" ng-model="search.dealer"/>
 <label for="make">Town: </label>
-<input type="text" class="form-control" ng-model="search.town"/>
+<input type="text" class="form-control" ng-init="search.town=''" value="" ng-model="search.town"/>
 <label for="make">Telephone: </label>
-<input type="text" class="form-control" ng-model="search.telephone"/>
+<input type="text" class="form-control" ng-init="search.telephone=''" value="" ng-model="search.telephone"/>
 <label for="make">Description: </label>
-<input type="text" class="form-control" ng-model="search.description"/>
+<input type="text" class="form-control" ng-init="search.description=''" value="" ng-model="search.description"/>
 <label for="make">Region: </label>
-<input type="text" class="form-control" ng-model="search.region"/>
+<input type="text" class="form-control" ng-init="search.region=''" value="" ng-model="search.region"/>
 </div>
-</form>
+<div class="input-group">
+	<button type="button" class="btn btn-primary" ng-click="displayData()">Search</button>
+</div>
+</form> -->
 <br>
 </div>
-<table class="table table-striped" ng-show="title" ng-init="displayAllData()">
+<table class="table table-striped" ng-show="title" ng-init="">
 <div class="modal_container">
 	<!-- Add Modal -->
 	<div class="modal fade" id="addModal" role="dialog">
@@ -253,7 +265,7 @@ $userRow=mysqli_fetch_array($res);
         </tr>
     </thead>
   <tbody>
-    <tr ng-model="searchresults" ng-repeat="i in result | orderBy:sortKey:reverse | filter: search | start: (currentPage - 1) * pageSize | limitTo: pageSize">
+    <tr ng-model="searchresults" ng-repeat="i in data | orderBy:sortKey:reverse | start: (currentPage - 1) * pageSizeInput | limitTo: pageSizeInput">
 			<div class="modal_container">
 				<!-- Delete Modal -->
 				<div class="modal fade" id="deleteModal" role="dialog">
@@ -291,14 +303,16 @@ $userRow=mysqli_fetch_array($res);
         <td>{{i.region}}</td>
 				<td>{{i.status}}</td>
 				<td>{{i.picture}}</td>
-        <td ng-show="delete_record"><button id="delete_button" type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#deleteModal" ng-click="open(i)">Delete</button></td>
-				<td ng-show="edit_record"><button id="edit_button" type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editModal" ng-click="open(i)">Edit</button></td>
+				<td><i class="fa fa-trash" aria-hidden="true" data-toggle="modal" data-target="#deleteModal" ng-click="open(i)"></i></td>
+				<td><i class="fa fa-pencil" aria-hidden="true" data-toggle="modal" data-target="#editModal" ng-click="open(i)"></i></td>
 		</tr>
   </tbody>
 </table>
 <div spinner></div>
-<pagination ng-show="paginator" total-items="result.length" items-per-page="pageSize" ng-model="currentPage" max-size="5" class="pagination-sm"></pagination>
-</div>
+<!-- <div id="paginator_botom" ng-show="paginator" class="col-md-3">
+<pagination total-items="numberOfItems" items-per-page="pageSizeInput" ng-change="pageChanged()" ng-model="currentPage" max-size="5" class="pagination-sm"></pagination>
+</div> -->
+
 </body>
 
 </html>

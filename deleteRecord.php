@@ -11,5 +11,5 @@ $sql="DELETE FROM cars WHERE CarIndex=?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("i", $objData->index);
 $stmt->execute();
-
+$stmt->close();
 ?>

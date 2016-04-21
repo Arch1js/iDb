@@ -102,7 +102,7 @@
 </select>
 </form>
 <center>
-    <div><button type="submit" id="submit" type="button" ng-click="search()">Search</button></div><!--Search button-->
+    <div><button type="submit" id="submit" type="button" ng-click="search(1)">Search</button></div><!--Search button-->
 </center>
           </div>
           </div>
@@ -112,7 +112,12 @@
             <strong>Error!</strong> No records found. Please try again!
         </div>
         <div id="sort" ng-show="sortTools" class="col-md-4 col-xs-12">
-          <pagination ng-show="paginator" total-items="result.length" items-per-page="pageSize" ng-model="currentPage" max-size="5" class="pagination-sm"></pagination>
+          <div class="col-md-4 col-xs-12">
+<pagination ng-show="paginator" ng-change="search(currentPage)" total-items="numberOfItems" items-per-page="pageSizeInput2" ng-model="currentPage" max-size="5" class="pagination-sm"></pagination>
+          </div>
+          <div id="pageCount" class="col-md-2 col-xs-12">
+          <p>Page {{currentPage}} of {{numberOfItems/pageSizeInput2 | roundup}}</p>
+        </div>
           <div  id="dropdown" class="col-md-2 col-xs-12">
             <button class="btn btn-default dropdown-toggle" type="button" id="sortbtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> Sort by
           <span class="caret"></span>
@@ -124,20 +129,14 @@
           </ul>
         </div>
         <div id="page_size" class="col-md-2 col-xs-12">
-        <form class="form-inline" id="selectbtn">
-        <div class="form-group" ng-model="pages">
-          <label></label>
-            <select class="form-control">
-              <option value="5" ng-model="five">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
-          </div>
-        </button>
-        </form>
+        <select class="form-control" ng-model="pageSizeInput2" ng-init="pageSizeInput2='5'" ng-change="search(currentPage)" ng-show="pages">
+            <option value="5" selected>5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+        </select>
       </div>
         </div>
-        <div class="results_view" ng-show="results" ng-repeat="car in result |orderBy:sortKey:reverse | start: (currentPage - 1) * pageSize | limitTo: pageSize" ><!-- Display results-->
+        <div class="results_view" ng-show="results" ng-repeat="car in data |orderBy:sortKey:reverse | start: (currentPage - 1) * pageSizeInput2 | limitTo: pageSizeInput2" ><!-- Display results-->
  <div class="wrapper" class="col-md-12 col-xs-12">
                   <div id="car_preview" class="col-md-3 col-xs-12">
                     <img class="img-thumbnail" ng-src="{{car.picture}}">
@@ -156,8 +155,10 @@
                   </div>
               </div>
 </div>
-<pagination ng-show="paginator" total-items="result.length" items-per-page="pageSize" ng-model="currentPage" max-size="5" class="pagination-sm"></pagination>
-          <div ng-show="display" display></div>
+<div ng-show="display" display></div>
+<div class="col-md-4 col-xs-12">
+<pagination ng-show="paginator" ng-change="search(currentPage)" total-items="numberOfItems" items-per-page="pageSizeInput2" ng-model="currentPage" max-size="5" class="pagination-sm"></pagination>
+</div>
      </div>
       </div>
     </body>

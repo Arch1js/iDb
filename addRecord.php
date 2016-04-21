@@ -18,5 +18,5 @@ $sql="INSERT INTO cars (make, model, Reg, colour, miles, price, dealer, town, te
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("ssssiississssi", $objData->make, $objData->model, $objData->Reg, $objData->colour, $objData->miles, $objData->price, $objData->dealer, $objData->town, $objData->telephone, $objData->description, $objData->picture, $objData->status, $objData->region, $newCarIndex);
 $stmt->execute();
-
+$stmt->close();
 ?>

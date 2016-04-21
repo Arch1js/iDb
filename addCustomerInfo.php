@@ -15,6 +15,11 @@ $sql="INSERT INTO payments (cardNo, expMonth, expYear, CVV) VALUES (sha(?),?,?,s
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("iiii", $objData->cardNo, $objData->month, $objData->year, $objData->cvv);
 $stmt->execute();
-$stm
 
+// $status='unavailable'; //when bought, set car status to unavailable
+// $sql="UPDATE cars SET status=? WHERE carIndex='1002'";
+// $stmt = $mysqli->prepare($sql);
+// $stmt->bind_param("s", $status);
+// $stmt->execute();
+$stmt->close();
 ?>

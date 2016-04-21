@@ -5,6 +5,10 @@ body {
 float: none;
 margin: 0 auto;
 }
+.col-centered{
+float: none;
+margin: 0 auto;
+}
 .breadcrumb li.third a {
 background: hsla(153, 57%, 51%, 1);
 }

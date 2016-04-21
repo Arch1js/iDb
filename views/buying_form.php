@@ -5,7 +5,7 @@ $paypal_id = 'a.dobrajs-facilitator@gmail.com'; //Business Email
 
 ?>
 <div ng-controller="CheckoutCtrl">
-<div class="col-md-2 col-xs-12">
+<div class="col-md-2 col-sm-6 col-xs-12">
 <form class="form-inline" id="customer-form">
   <div class="control-group">
     <label class="control-label" for="name">First Name</label>
@@ -35,7 +35,7 @@ $paypal_id = 'a.dobrajs-facilitator@gmail.com'; //Business Email
   </div>
 </form>
 </div>
-<div class="col-md-2 col-xs-12">
+<div class="col-md-2 col-sm-6 col-xs-12">
 <form class="form-inline" id="customer-form2">
 <div class="control-group">
     <label class="control-label" for="card">Credit Card number</label>
