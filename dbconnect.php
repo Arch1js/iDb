@@ -5,14 +5,10 @@ $user = "archijs";
 $password = "artu3005";
 $db = "Cars";
 
-/*$host = "localhost";
-$user = "root";
-$password = "";
-$db = "cars";*/
+$mysqli=mysqli_connect($host,$user,$password,$db);
 
-    $mysqli=mysqli_connect($host,$user,$password,$db);
-    if (!$mysqli)
-  {
+  if (!$mysqli) {
   die("Connection error: " . mysqli_connect_error());
   }
+
 ?>

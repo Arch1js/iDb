@@ -1,62 +1,65 @@
 <!DOCTYPE html>
 <html ng-app="carApp">
-    <head>
-        <meta charset="UTF-8">
-        <title>Car sales</title>
-        <script src="../dependencies/angular.min.js"></script><!-- AngularJS -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="../dependencies/bootstrap/css/bootstrap.css">
-        <link rel="stylesheet" href="../css/checkout.css"><!-- Stylesheet -->
-        <link rel="stylesheet" href="../css/breadcrumb_style.css"><!-- Stylesheet -->
-        <link rel="stylesheet" href="../dependencies/font-awesome/css/font-awesome.min.css">
+  <head>
+    <meta charset="UTF-8">
+    <title>CarGo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../dependencies/bootstrap/css/bootstrap.css"><!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/checkout.css"><!-- Checkout Stylesheet -->
+    <link rel="stylesheet" href="../css/breadcrumb_style.css"><!-- Breadcrumb Stylesheet -->
+    <link rel="stylesheet" href="../dependencies/font-awesome/css/font-awesome.min.css"><!-- Font awesome CSS -->
 
-        <script src="../dependencies/ui-bootstrap-tpls-1.2.5.js"></script>
-        <script src="../dependencies/jquery-2.2.2.min.js"></script>
-        <script src="../dependencies/bootstrap/js/bootstrap.min.js"></script>
-        <script src="../dependencies/jquery.validate.min.js"></script>
+    <script src="../dependencies/angular.min.js"></script><!-- AngularJS -->
+    <script src="../dependencies/ui-bootstrap-tpls-1.2.5.js"></script><!-- Bootstrap UI -->
+    <script src="../dependencies/jquery-2.2.2.min.js"></script><!-- JQuery -->
+    <script src="../dependencies/bootstrap/js/bootstrap.min.js"></script><!-- Bootstrap JS -->
+    <script src="../dependencies/jquery.validate.min.js"></script><!-- JQuery validate library -->
 
-
-        <!-- Services -->
-        <script src="../functions.js"></script>
-
-        <!-- Directives -->
-        <script src="../directives/directives.js"></script>
-</head>
-    <body ng-controller="CheckoutCtrl">
-    <div navbar></div><!-- Link to navigation bar html -->
-    <div class="col-md-10 col-centered" ng-repeat="data in sharedData">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <div breadcrumbs></div>
-        </div>
-    <div class="panel-body">
-      <div id="car_container" class="col-md-4 col-xs-12">
-          <img class="car_image " ng-src="{{data.picture}}">
+    <!-- Services -->
+    <script src="../functions.js"></script>
+    <!-- Directives -->
+    <script src="../directives/directives.js"></script>
+  </head>
+  <body ng-controller="CheckoutCtrl">
+    <div navbar></div><!-- Navigation bar directive -->
+    <div class="col-md-10 col-centered" ng-show="error" ><!-- Car not found message -->
+      <div class="alert alert-danger" class="col-xs-12">
+        <strong>Sorry!</strong> This car isn't available anymore :(
       </div>
-        <div id="stats2" class="col-md-6 col-xs-12">
+    </div>
+    <div class="col-md-10 col-centered" ng-repeat="data in result"><!-- Car information container -->
+      <div class="panel panel-primary" ng-show="carResults">
+        <div class="panel-heading">
+          <div breadcrumbs></div><!-- Breadcrumbs directive -->
+        </div>
+        <div class="panel-body">
+        <div id="car_container" class="col-md-4 col-xs-12"><!--Car image container -->
+          <img class="car_image " ng-src="{{data.picture}}">
+        </div>
+        <div id="stats2" class="col-md-6 col-xs-12"><!-- Car information -->
           <div class="col-md-4">
           <h3 id="label">Make:</h3><h5>{{ data.make}}</h5>
           <h3 id="label">Model:</h3><h5>{{ data.model}}</h5>
           <h3 id="label">Colour:</h3><h5>{{ data.colour}}</h5>
           <h3 id="label">Price:</h3><h5>£{{ data.price | number:0}}</h5>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 col-xs-12">
           <h3 id="label">Registration:</h3><h5>{{ data.Reg}}</h5>
           <h3 id="label">Miles:</h3><h5>{{ data.miles}}</h5>
           <h3 id="label">Dealer:</h3><h5>{{ data.dealer}}</h5>
           <h3 id="label">Town:</h3><h5>{{ data.town}}</h5>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 col-xs-12">
           <h3 id="label">Telephone:</h3><h5>{{ data.telephone}}</h5>
           <h3 id="label">Description:</h3><h5>{{ data.description}}</h5>
           <h3 id="label">Region:</h3><h5>{{ data.region}}</h5>
         </div>
-    </div>
-    <div id="checkout" class="col-md-12">
-    <div buy></div>
-</div>
-  </div>
-        </div>
       </div>
-    </body>
+      <div id="checkout" class="col-md-12">
+        <div buy></div><!-- Buying form directive -->
+      </div>
+      </div><!-- End of panel body -->
+    </div><!-- End of primary panel -->
+  </div> <!-- End of content container -->
+  </body>
 </html>

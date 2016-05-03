@@ -1,49 +1,48 @@
 <!DOCTYPE html>
 <html ng-app="carApp">
-    <head>
-        <meta charset="UTF-8">
-        <title>Car sales</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="../dependencies/bootstrap.css">
-        <link rel="stylesheet" href="../dependencies/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="../css/breadcrumb_style.css"><!-- Stylesheet -->
-        <link rel="stylesheet" href="../css/confirmation_style.css"><!-- Stylesheet -->
+  <head>
+    <meta charset="UTF-8">
+    <title>Car sales</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../dependencies/bootstrap/css/bootstrap.css"><!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/breadcrumb_style.css"><!-- Breadcrumb Stylesheet -->
+    <link rel="stylesheet" href="../css/confirmation_style.css"><!-- Confirmation Stylesheet -->
+    <link rel="stylesheet" href="../dependencies/font-awesome/css/font-awesome.min.css"> <!-- Font awesome -->
 
-        <script src="../dependencies/angular.min.js"></script><!-- AngularJS -->
-        <script src="../dependencies/ui-bootstrap-tpls-1.2.5.js"></script>
-        <script src="../dependencies/jquery-2.2.2.min.js"></script>
-        <script src="../dependencies/bootstrap.min.js"></script>
+    <script src="../dependencies/angular.min.js"></script><!-- AngularJS -->
+    <script src="../dependencies/ui-bootstrap-tpls-1.2.5.js"></script><!-- Bootstrap UI -->
+    <script src="../dependencies/jquery-2.2.2.min.js"></script><!-- JQuery -->
+    <script src="../dependencies/bootstrap/js/bootstrap.min.js"></script><!-- Bootstrap JS -->
 
-        <!-- Services -->
-        <script src="../functions.js"></script>
-
-        <!-- Directives -->
-        <script src="../directives/directives.js"></script>
-</head>
-<body ng-controller="confirmCtrl" data-ng-init="getOrderNo()">
-    <div navbar></div><!-- Link to navigation bar html -->
+    <!-- Services -->
+    <script src="../functions.js"></script>
+    <!-- Directives -->
+    <script src="../directives/directives.js"></script>
+  </head>
+  <body ng-controller="confirmCtrl" data-ng-init="getOrderNo()">
+    <div navbar></div><!-- Navigation bar directive -->
     <div class="col-md-10 col-centered">
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <div breadcrumbs></div>
+          <div breadcrumbs></div><!-- Breadcrumbs directive -->
         </div>
-    <div class="panel-body">
-      <div ng-repeat="data in sharedData">
-        <center>
-        <h1><u>Your order is confirmed!</u></h1>
-        </center>
-        <p><b>Estimated car pick-up time:</b> {{date | date:'yyyy-MM-dd'}} 10:00 pm</p>
-        <p><b>Location:</b> {{data.dealer}}, {{data.town}} </p>
-        <h3>What documents to I need to take with me?</h3>
-        <ul>
-            <li><i class="fa fa-check-circle"></i> Some form of identification (drivers licence, pasport, etc.)</li>
-            <li><i class="fa fa-check-circle"></i> Credit check papers</li>
-            <li><i class="fa fa-check-circle"></i> Valid insuarnce policy</li>
-            <li><i class="fa fa-check-circle"></i> And few other</li>
-        </ul>
-      </div>
+        <div class="panel-body">
+          <div ng-repeat="data in sharedData"><!-- Order summary data -->
+            <center>
+              <h1><u>Your order is confirmed!</u></h1>
+            </center>
+            <p><b>Estimated car pick-up time:</b> {{date | date:'yyyy-MM-dd'}} 10:00 pm</p>
+            <p><b>Location:</b> {{data.dealer}}, {{data.town}} </p>
+            <h3>What documents to I need to take with me?</h3>
+            <ul>
+              <li><i class="fa fa-check-circle"></i> Some form of identification (drivers licence, pasport, etc.)</li>
+              <li><i class="fa fa-check-circle"></i> Credit check papers</li>
+              <li><i class="fa fa-check-circle"></i> Valid insuarnce policy</li>
+              <li><i class="fa fa-check-circle"></i> And few other</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-    </body>
+  </body>
 </html>

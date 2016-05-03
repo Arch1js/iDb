@@ -1,5 +1,4 @@
 <?php
-
 $data = file_get_contents("php://input");
 
 require 'dbconnect.php';

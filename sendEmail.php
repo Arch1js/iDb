@@ -1,12 +1,12 @@
 
 <?php
 $data = file_get_contents("php://input");
-# Include the Autoloader (see "Libraries" for install instructions)
+
 require '/Mailgun/vendor/autoload.php';
 use Mailgun\Mailgun;
 $objData = json_decode($data);
-// $email = $objData->email;
-$email = 'a.dobrajs@gmail.com';
+$email = $objData->email;
+
 $make = $objData->make;
 $model = $objData->model;
 $miles = $objData->miles;
@@ -29,6 +29,6 @@ Price: $price
 Colour: $colour",
                         'recipient-variables' => '{"bob@example.com": {"first":"Bob", "id":1},
                                          "alice@example.com": {"first":"Alice", "id": 2}}'));
-                        // 'html'    => $html));
 
+$stmt->close();
 ?>

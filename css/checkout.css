@@ -9,7 +9,6 @@ body {
 * {
   font-family: 'Shift', sans-serif;
 }
-
 .col-centered{
 float: none;
 margin: 0 auto;
@@ -54,4 +53,7 @@ label.error {
 #checkout {
   border-top: 1px solid black;
   margin-top: 20px;
+}
+.navbar-brand {
+	padding: 5px 15px;
 }

@@ -9,15 +9,51 @@ function confirmCtrl($scope, $http, srvShareData) {
 }
 
 function adminCtrl($scope, $http, $filter) {
+	$scope.currentPage = 1;
+	$scope.data = [];
+	$scope.data2 = [];
+	$scope.orderdata = [];
+	$scope.orderdata2 = [];
+
+	$scope.url = '/displayOrders.php';
+	$scope.url2 = '/displayAllCars.php';
 	var data = {
 
 	};
-	$scope.currentPage = 1;
-	// $scope.loadMore = [];
-		$scope.data = [];
-	$scope.data2 = [];
+	$scope.changePageToFirst = function(page) {
+		$scope.currentPage = 1;
+	}
 
-	$scope.url2 = '/displayAllCars.php';
+	$scope.displayOrders = function(page) {
+		$scope.loading = true;
+		var incr = $scope.pageSizeInput3 * $scope.currentPage;
+		if($scope.currentPage == 1) {
+					var start = 0;
+		}
+		else {
+					var start = page;
+		}
+		var data = {
+			start:start,
+			incr: incr
+};
+$http.post($scope.url, data).
+		success(function(data,status) {
+			if(!$scope.orderdata.length) {
+				$scope.orderdata= data[0];
+			}
+			else {
+				$scope.loadMore = data[0];
+				$scope.orderdata = $scope.orderdata.concat($scope.loadMore);
+			}
+						$scope.orderdata= data[0];
+						$scope.orderdata2 = data[1];
+						$scope.numberOfItems2 = $scope.orderdata2[0].count;
+						$scope.controls = true;
+						$scope.loading = false;
+	});
+}
+
 
 $scope.displayData=function(page){
 	$scope.currentPage = page;
@@ -52,9 +88,16 @@ $scope.displayData=function(page){
 								$scope.data2 = data[1];
 								$scope.numberOfItems = $scope.data2[0].count;
 
-					$scope.paginator = true;
-					$scope.loading = false;
-					$scope.perpage=true;
+								if($scope.data2[0].count == 0) {
+									$scope.query_error = true;
+									$scope.loading = false;
+								}
+								else {
+									$scope.query_error = false;
+									$scope.paginator = true;
+									$scope.loading = false;
+									$scope.perpage=true;
+								}
 				});
 		};
 
@@ -65,7 +108,6 @@ $scope.sort = function(keyname){
 
 $scope.addRecord = function(i) {
  $scope.url = '/addRecord.php';
-
         var data = {
         make: $scope.add.make,
         model: $scope.add.model,
@@ -81,12 +123,9 @@ $scope.addRecord = function(i) {
 				status: $scope.add.status,
 				region: $scope.add.region,
     };
+    $http.post($scope.url, data);
 
-    $http.post($scope.url, data).
-		success(function(data, status) {
-
-		})
-$scope.result.push(data);
+$scope.data.push(data);
 
 }
 $scope.updateRecord = function(record) {
@@ -119,33 +158,102 @@ $scope.open = function(i) {
 		$scope.record = i;
 }
 
-$scope.delete_item = function(i) {
-        $scope.item = i;
+$scope.delete_item = function() {
+
     $scope.url = '/deleteRecord.php';
         var data = {
-        index: i.carIndex
+        index: $scope.record.carIndex
     };
-    $scope.result.splice($scope.result.indexOf(i), 1); //remove deleted item from view
+    $scope.data.splice($scope.data.indexOf($scope.record.carIndex), 1); //remove deleted item from view
     $http.post($scope.url, data).
 		success(function() {
         $scope.$apply(function(){
     });
 		})
-    }
+	};
 
 }
 
-function SearchCtrl($scope, $http, srvShareData, $location, $filter) {
-
+function SearchCtrl($scope, $http, srvShareData, $location, $filter) { //Car search page controller
+	$(function(){ //Carousel slide controller
+    $('.carousel').carousel({
+      interval: 4000
+    });
+	});
+	$scope.carousel = true; //show carousel when page loads
 	$scope.currentPage = 1;
-	$scope.data = [];
-	$scope.data2 = [];
+	$scope.loadMore = []; //temporary array for storing additional loaded records
+	$scope.data = []; //array for storing search results
+	$scope.data2 = []; //search reslut count array
+	$scope.result2 = []; //car make array
 
-	$scope.url = '/search.php';
-		$scope.url2 = '/refine_search.php';
+	$scope.url = '/search.php'; //data post urls
+	$scope.url2 = '/refine_search.php';
 
-	$scope.sendEmail = function() {
-	    $scope.url = '/sendEmail.php';
+	$scope.search=function(page){ //Main car search function
+		$scope.paginator = false; //hide elements when new search results are loading
+		$scope.loading = true;
+		$scope.perpage=false;
+		$scope.results = false;
+		$scope.carousel = false;
+		$scope.display = false;
+
+		$scope.currentPage = page;
+		var incr = $scope.pageSizeInput2 * $scope.currentPage; //increse limit passed to sql
+
+		if($scope.currentPage == 1) { //if current page is 1, set start limit to 0
+			var start = 0;
+		}
+		else {
+			var start = page;
+		}
+				var data = { //data to be posted to php function
+					dataCount: incr,
+					start: start,
+					make: $scope.make,
+					colour: $scope.colour,
+					milage: $scope.milage,
+					carmodel: $scope.carmodel,
+					minprice: $scope.minprice,
+					maxprice: $scope.maxprice
+		};
+
+			$http.post($scope.url, data) //posts data to search.php
+			.success(function(data,status) { //returned data from php
+
+			if(!$scope.data.length) { //if data array is empty
+				$scope.data= data[0]; //add search results to array
+			}
+			else { //if not
+				$scope.loadMore = data[0]; //add new data to temporary array and concatonate with previous data
+				$scope.data = $scope.data.concat($scope.loadMore);
+			}
+				$scope.data = data[0]; //search results
+				$scope.data2 = data[1]; //search result count
+				$scope.numberOfItems = $scope.data2[0].count;
+
+				if($scope.data2[0].count == 0) { //if search query fails, display error message
+					$scope.error = true;
+					$scope.loading = false;
+					$scope.sortTools = false;
+				}
+				else {
+					$scope.sortTools = true;
+					$scope.error = false;
+					$scope.results = true;
+					$scope.display = false;
+					$scope.paginator = true;
+					$scope.pages = true;
+					$scope.loading = false;
+				}
+			});
+		};
+
+		$scope.transfer = function() { //transfer user to checkout page
+	      window.location.href = "checkout.html?make="+$scope.carresult.make+"&model="+$scope.carresult.model+"&colour="+$scope.carresult.colour+"&miles="+$scope.carresult.miles+"&price="+$scope.carresult.price;
+	  }
+	$scope.sendEmail = function() { //send car information email to customer
+	    $scope.url = '/sendEmail.php'; //data post url
 
 	        var data = {
 	        email: $scope.userEmail,
@@ -162,40 +270,29 @@ function SearchCtrl($scope, $http, srvShareData, $location, $filter) {
 			})
 	}
 
-	$scope.sort = function(keyname){
+	$scope.sort = function(keyname){ //sort results by make,model or price
         $scope.sortKey = keyname;
         $scope.reverse = !$scope.reverse;
     }
-  $scope.shareMyData = function (car) {
-      $scope.sharedData = srvShareData.removeData();
-      srvShareData.addData(car);
-  }
 
-  $scope.transfer = function() {
-      window.location.href = "checkout.html";
-  }
-
-    $scope.hideResults = function(){
+  $scope.hideResults = function(){ //function for multiple elemet hiding/showing
      $scope.results = false;
      $scope.display = true;
      $scope.paginator = false;
 		 $scope.sortTools = false;
-     }
+    }
 
-    $scope.showResults = function(){
+    $scope.showResults = function(){ //function to show/hide multiple elements
      $scope.results = true;
      $scope.display = false;
 		 $scope.sortTools = true;
      }
-    $scope.showPaginator = function() {
-      $scope.paginator = true;
-    }
 
-    $scope.open = function(car) {
+    $scope.open = function(car) { //share selected element data between search_view and display page
         $scope.carresult = car;
     }
 
-    $scope.refine = function() {
+    $scope.refine = function() { //refine all car models from database based on make selection
         var data = {
         make: $scope.make
     };
@@ -205,49 +302,57 @@ function SearchCtrl($scope, $http, srvShareData, $location, $filter) {
 			$scope.result2 = data;
     })
     }
-
-		$scope.search=function(page){
-			$scope.url2 = '/search.php';
-			$scope.currentPage = page;
-				var incr = $scope.pageSizeInput2 * $scope.currentPage;
-				$scope.first = 0;
-					var data = {
-						dataCount: incr,
-						make: $scope.make,
-		        colour: $scope.colour,
-		        milage: $scope.milage,
-						carmodel: $scope.carmodel,
-		        minprice: $scope.minprice,
-		        maxprice: $scope.maxprice
-			};
-
-				$http.post($scope.url2, data).
-						success(function(data,status) {
-							$scope.sortTools = true;
-							$scope.error = false;
-							$scope.results = true;
-							$scope.display = false;
-							$scope.paginator = true;
-							$scope.pages = true;
-
-										$scope.data = data[0];
-										$scope.data2 = data[1];
-										$scope.numberOfItems = $scope.data2[0].count;
-
-							// $scope.paginator = true;
-							// $scope.loading = false;
-							// $scope.perpage=true;
-						});
-				};
-
+		$scope.shareMyData = function (car) {
+				$scope.sharedData = srvShareData.removeData();
+				srvShareData.addData(car);
+		}
 };
 
-function CheckoutCtrl($scope, $http, srvShareData) {
+function CheckoutCtrl($scope, $http, $location) { //Checkout page controller
+	$scope.url = '/displayCarInfo.php'; //data post url
 
-$scope.sharedData = srvShareData.getData();
+	function getParameterByName(name, url) { //function to get url parameters
+			if (!url) url = window.location.href;
+			name = name.replace(/[\[\]]/g, "\\$&");
+			var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+					results = regex.exec(url);
+			if (!results) return null;
+			if (!results[2]) return '';
+			return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
 
-$(document).ready(function(){
-$("#customer-form, #customer-form2").validate({
+	//On page load get url parameters and post it to url above
+	var make = getParameterByName('make');
+	var model = getParameterByName('model');
+	var colour = getParameterByName('colour');
+	var price = getParameterByName('price');
+	var miles = getParameterByName('miles');
+		var data = {
+			make: make,
+			model: model,
+			colour: colour,
+			price: price,
+			miles: miles
+		};
+
+		$http.post($scope.url, data).
+			success(function(data, status) {
+					$scope.result = data;
+					if($scope.result == 0) { //if returened data count is 0, display error
+						$scope.error = true;
+					}
+					else { //if not, display results
+						$scope.carResults = true;
+					}
+				});
+
+$(document).ready(function(){ //form validation function
+	$('#submit').removeAttr("data-toggle", "modal");
+	$("#customer-form").validate({
+		submitHandler: function(form) {
+    $('#submit').attr("data-toggle", "modal");
+		$('#submit').click();
+  },
 			 rules: {
 					 name: {
 							 minlength: 1,
@@ -281,59 +386,21 @@ $("#customer-form, #customer-form2").validate({
 							 minlength: 3,
 							 required: true
 					 }
-
 			 },
 			 highlight: function(element) {
-	$(element).closest('.control-group').removeClass('has-success').addClass('has-error');
-	$('#submit').addClass('disabled');
-	// $('#submit').removeAttr("data-toggle", "modal");
-},
-success: function(element) {
-	element
-
-	.closest('.control-group').removeClass('has-error').addClass('has-success');
-	$('#submit').removeClass('disabled');
-	// $('#submit').attr("data-toggle", "modal");
-}
-});
-$("#customer-form2").validate({
-			 rules: {
-					 card: {
-							 minlength: 16,
-							 required: true
-					 },
-					 month: {
-							 minlength: 2,
-							 required: true
-					 },
-					 year: {
-							 minlength: 2,
-							 required: true
-					 },
-					 cvv: {
-							 minlength: 3,
-							 required: true
-					 }
-
-			 },
-			 highlight: function(element) {
-	$(element).closest('.control-group').removeClass('has-success').addClass('has-error');
-	$('#submit').addClass('disabled');
-	$('#submit').removeAttr("data-toggle", "modal");
-},
-success: function(element) {
-	element
-
-	.closest('.control-group').removeClass('has-error').addClass('has-success');
-	$('#submit').removeClass('disabled');
-	$('#submit').attr("data-toggle", "modal");
-}
-});
+				 	$(element).closest('.control-group').removeClass('has-success').addClass('has-error');
+					$('#submit').addClass('disabled');
+					$('#submit').removeAttr("data-toggle", "modal");
+				},
+			success: function(element) {
+				$(element).closest('.control-group').removeClass('has-error').addClass('has-success');
+				$('#submit').removeClass('disabled');
+			}
+		});
  });
 
-$scope.addCustomerInfo = function() {
+$scope.addCustomerInfo = function() { //function to add customer information to database
  $scope.url = '/addCustomerInfo.php';
-
         var data = {
         name: $scope.name,
         lastName: $scope.lastName,
@@ -342,42 +409,31 @@ $scope.addCustomerInfo = function() {
         cardNo: $scope.cardNo,
         month: $scope.month,
         year: $scope.year,
-        cvv: $scope.cvv
+        cvv: $scope.cvv,
+				carIndex: $scope.data.carIndex
     };
 
-    $http.post($scope.url, data).
-		success(function(data, status) {
-			$scope.result = data;
-		})
-  window.location.href = "confirmedPage.html";
+    $http.post($scope.url, data);
+  	window.location.href = "confirmedPage.html"; //redirect user to confirmed page when data is writen to database
 };
 
-$scope.sendEmail = function() {
-    $scope.url = '/sendEmail.php';
-
+$scope.sendEmail = function() { //send confirmation email
+    $scope.url = '/sendConfirmEmail.php';
         var data = {
         email: $scope.email
     };
-
-    $http.post($scope.url, data).
-		success(function(data, status) {
-			$scope.result = data;
-		})
+    $http.post($scope.url, data);
 };
 
 };
 
-app.service('srvShareData', function($window) {
+app.service('srvShareData', function($window) { //use session to store order information
         var KEY = 'Value';
-
         var addData = function(newObj) {
-
               mydata = [];
-
             mydata.push(newObj);
             $window.sessionStorage.setItem(KEY, JSON.stringify(mydata));
         };
-
         var getData = function(){
             var mydata = $window.sessionStorage.getItem(KEY);
             if (mydata) {
@@ -388,7 +444,6 @@ app.service('srvShareData', function($window) {
     var removeData = function(){
           $window.sessionStorage.removeItem(KEY);
         }
-
         return {
             addData: addData,
             getData: getData,
@@ -396,7 +451,7 @@ app.service('srvShareData', function($window) {
         };
     });
 
-app.filter('unique', function() {
+app.filter('unique', function() { //unique records filter
     return function(input, key) {
         var unique = {};
         var uniqueList = [];
@@ -410,7 +465,7 @@ app.filter('unique', function() {
     };
 });
 
-app.filter('start', function () {
+app.filter('start', function () { //splice search results for pagination
     return function (input, start) {
         if (!input || !input.length) { return; }
 
@@ -418,18 +473,8 @@ app.filter('start', function () {
         return input.slice(start);
     };
 });
-app.filter('roundup', function () {
+app.filter('roundup', function () { //page number rounding filter
         return function (value) {
             return Math.ceil(value);
         };
     });
-// app.filter('startFrom', function() {
-//     return function(input, start) {
-//         start = +start; //parse to int
-//         return input.slice(start);
-//     }
-// });
-
-/*$scope.setPage = function () {
-        $scope.currentPage = this.n;
-};*/

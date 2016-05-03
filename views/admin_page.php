@@ -4,7 +4,7 @@ require '../dbconnect.php';
 
 if(!isset($_SESSION['user']))
 {
-	header("Location: user_login.php");
+	header("Location: ../user_login.php");
 }
 $res=mysqli_query($mysqli, "SELECT * FROM administrators WHERE user_id=".$_SESSION['user']);
 $userRow=mysqli_fetch_array($res);
@@ -56,6 +56,12 @@ $userRow=mysqli_fetch_array($res);
     </div>
 </div>
 <div ng-controller="adminCtrl" data-ng-init="title=true"><!-- Controller class -->
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="pill" href="#cars">Cars</a></li>
+    <li><a data-toggle="pill" href="#orders">Orders</a></li>
+  </ul>
+	<div class="tab-content">
+	<div id="cars" class="tab-pane fade in active">
 	<div class="col-md-12">
     <div id="admin_tools" class="col-md-7 col-xs-12">
   <div class="col-md-3 col-xs-12">
@@ -76,7 +82,7 @@ $userRow=mysqli_fetch_array($res);
   </div>
 	<div class="col-md-2 col-xs-12">
 	<div class="input-group">
-		<button type="button" class="btn btn-warning"  ng-click="displayData(1)">Load all data</button>
+		<button type="button" class="btn btn-warning"  ng-click="displayData(1)">Load data</button>
 	</div>
 </div>
 <div class="col-md-2 col-xs-12">
@@ -115,23 +121,6 @@ $userRow=mysqli_fetch_array($res);
 </div>
 </form>
 <br>
-<!-- <form class="form-inline">
-<div id="change_form" class="form-group">
-<label for="make">Dealer: </label>
-<input type="text" class="form-control" ng-init="search.dealer=''" value="" ng-model="search.dealer"/>
-<label for="make">Town: </label>
-<input type="text" class="form-control" ng-init="search.town=''" value="" ng-model="search.town"/>
-<label for="make">Telephone: </label>
-<input type="text" class="form-control" ng-init="search.telephone=''" value="" ng-model="search.telephone"/>
-<label for="make">Description: </label>
-<input type="text" class="form-control" ng-init="search.description=''" value="" ng-model="search.description"/>
-<label for="make">Region: </label>
-<input type="text" class="form-control" ng-init="search.region=''" value="" ng-model="search.region"/>
-</div>
-<div class="input-group">
-	<button type="button" class="btn btn-primary" ng-click="displayData()">Search</button>
-</div>
-</form> -->
 <br>
 </div>
 <table class="table table-striped" ng-show="title" ng-init="">
@@ -282,7 +271,7 @@ $userRow=mysqli_fetch_array($res);
 			</form>
 				<div class="modal-footer">
 					<!--<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="addCustomerInfo(); sendEmail()">Yes</button>-->
-				<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="delete_item(record)">Delete</button>
+				<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="delete_item()">Delete</button>
 					<button type="button" class="btn btn-warning" data-toggle="modal" data-dismiss="modal">Cancel</button>
 				</div>
 			</div>
@@ -308,11 +297,66 @@ $userRow=mysqli_fetch_array($res);
 		</tr>
   </tbody>
 </table>
+<div id="paginator_botom" ng-show="paginator" class="col-md-3">
+<pagination total-items="numberOfItems" items-per-page="pageSizeInput"  ng-change="displayData(currentPage)" ng-model="currentPage" max-size="5" class="pagination-sm"></pagination>
+</div>
+<div class="alert alert-danger" ng-show="query_error" class="col-xs-12">
+		<strong>Error!</strong> No results found. Please try another query!
+	</div>
+</div>
+</div>
+<div id="orders" class="tab-pane fade" ng-click="changePageToFirst(1)">
+	<div class="col-md-2 col-xs-12">
+		<br>
+	<div class="input-group">
+		<button type="button" class="btn btn-warning"  ng-click="displayOrders(1)">Load all orders</button>
+	</div>
+		</div>
+		<br>
+		<div class="col-md-4 pull-right" ng-show="controls">
+	<div class="col-md-4 col-xs-12">
+		<select class="form-control" ng-model="pageSizeInput3" ng-init="pageSizeInput3='10'" ng-change="displayOrders(currentPage)">
+		    <option value="10" selected>10</option>
+		    <option value="25">25</option>
+		    <option value="50">50</option>
+		    <option value="100">100</option>
+		</select>
+	</div>
+	<div id="paginator_top"class="col-md-8 col-xs-12">
+		<div id="pageCounter">
+		<p>Page {{currentPage}} of {{numberOfItems2/pageSizeInput3 | roundup}}</p>
+		</div>
+	<pagination total-items="numberOfItems2" items-per-page="pageSizeInput3"  ng-change="displayOrders(currentPage)" ng-model="currentPage" max-size="5" class="pagination-sm"></pagination>
+	</div>
+</div>
+	<table class="table table-striped" ng-show="title" ng-init="">
+	    <thead>
+	        <tr>
+	            <th ng-click="sort('make')">Order ID<span class="glyphicon sort-icon" ng-show="sortKey=='make'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+	            <th ng-click="sort('model')">Car Index<span class="glyphicon sort-icon" ng-show="sortKey=='model'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+	            <th ng-click="sort('Reg')">Customer ID<span class="glyphicon sort-icon" ng-show="sortKey=='Reg'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+							<th ng-click="sort('Reg')">Payment ID<span class="glyphicon sort-icon" ng-show="sortKey=='Reg'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+	            <th ng-click="sort('colour')">Card No<span class="glyphicon sort-icon" ng-show="sortKey=='colour'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+							<th ng-click="sort('colour')">Exp Month <span class="glyphicon sort-icon" ng-show="sortKey=='colour'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+							<th ng-click="sort('colour')">Exp Year <span class="glyphicon sort-icon" ng-show="sortKey=='colour'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+							<th ng-click="sort('colour')">CVV <span class="glyphicon sort-icon" ng-show="sortKey=='colour'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span></th>
+					</tr>
+	    </thead>
+	  <tbody>
+	    <tr ng-model="searchresults" ng-repeat="i in orderdata | orderBy:sortKey:reverse | start: (currentPage - 1) * pageSizeInput3 | limitTo: pageSizeInput3">
+					<td>{{i.orderID}}</td>
+	        <td>{{i.carIndex}}</td>
+					<td>{{i.customerID}}</td>
+					<td>{{i.paymentID}}</td>
+					<td>{{i.cardNo}}</td>
+	        <td>{{i.expMonth}}</td>
+	        <td>{{i.expYear}}</td>
+					<td>{{i.CVV}}</td>
+	  </tbody>
+	</table>
+	</div>
+</div>
 <div spinner></div>
-<!-- <div id="paginator_botom" ng-show="paginator" class="col-md-3">
-<pagination total-items="numberOfItems" items-per-page="pageSizeInput" ng-change="pageChanged()" ng-model="currentPage" max-size="5" class="pagination-sm"></pagination>
-</div> -->
-
 </body>
 
 </html>

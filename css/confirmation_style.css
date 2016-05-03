@@ -18,3 +18,6 @@ border-left: 30px solid hsla(153, 57%, 51%, 1);
 ul li {
     list-style-type: none;
 }
+.navbar-brand {
+	padding: 5px 15px;
+}

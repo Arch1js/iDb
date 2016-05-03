@@ -1,61 +1,51 @@
-<html>
-    <head>
-        <meta charset="UTF-8" ng-app="carApp">
-    <title>Car sales</title>
-    </head>
-    <body>
-      <div class="modal_container">
-              <!-- Modal -->
-              <div class="modal fade" id="myModal" role="dialog">
-                  <div class="modal-dialog">
-              <!-- Modal content-->
-              <div class="modal-content">
-                  <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <img width="100px" height="40px" alt="Brand" src="../Asets/Logo.svg"><!-- Logo -->
-              </div>
-              <div class="modal-body">
-                <fieldset class="form-group">
-                    <label for="exampleInputEmail1">Please enter your Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" ng-model="userEmail" required>
-                    <small class="text-muted">We'll never share your email with anyone else.</small>
-                </fieldset>
-              </div>
-              <div class="modal-footer">
-                <!--<button type="button" class="btn btn-success" data-dismiss="modal" ng-click="addCustomerInfo(); sendEmail()">Yes</button>-->
-              <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="sendEmail()">Send</button>
-                <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
-              </div>
-            </div>
+<div class="modal_container"> <!-- Modal popup for sending car info to email-->
+  <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <img width="100px" height="40px" alt="Brand" src="../Asets/Logo.svg"><!-- Logo -->
+          </div>
+          <div class="modal-body">
+            <fieldset class="form-group">
+              <label for="exampleInputEmail1">Please enter your Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" ng-model="userEmail" required>
+              <small class="text-muted">We'll never share your email with anyone else.</small>
+            </fieldset>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="sendEmail()">Send</button> <!-- Send email to customer-->
+            <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button> <!-- Cancel sending email-->
           </div>
         </div>
       </div>
-        <div id="display" class="col-md-8 col-xs-12">
-            <div id="back_button">
-                <button type="button" class="btn btn-success" ng-click="showResults(); showPaginator()"><i class="fa fa-chevron-left"></i>
-Back</button></div>
-            <div id="car_view_container">
-                <img id="car_view" ng-src="{{carresult.picture}}">
-            </div>
-            <div id="stat1">
-            <h3><h3 id="label">Make </h3>{{carresult.make}}</h3>
-            <h3><h3 id="label">Model: </h3>{{carresult.model}}</h3>
-            <h3><h3 id="label">Miles: </h3>{{carresult.miles}}</h3>
-          </div>
-          <div id="stat2">
-            <h3><h3 id="label">Price </h3>£{{carresult.price}}</h3>
-            <h3><h3 id="label">Colour </h3>{{carresult.colour}}</h3>
-            <h3><h3 id="label">Town </h3>{{carresult.town}}</h3>
-          </div>
-          <div id="stat3">
-            <h3><h3 id="label">Description </h3>{{carresult.description}}</h3>
-            <h3><h3 id="label">Region </h3>{{carresult.region}}</h3>
-          </div>
-          <div id="buttons">
-            <div id="email_button">
-              <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal"><i class="fa fa-envelope"></i> Send to Email</button></div>
-            <div id="buy_button">
-              <button type="button" class="btn btn-primary btn-lg" ng-click="transfer()"><i class="fa fa-car"></i> Buy</button></div>
-          </div>
-    </body>
-</html>
+  </div>
+</div><!-- End of email modal-->
+<div id="display" class="col-md-8 col-xs-12">
+  <div id="back_button"><!-- Button to take back to search results-->
+    <button type="button" class="btn btn-success" ng-click="showResults(); showPaginator()"><i class="fa fa-chevron-left"></i>Back</button>
+  </div>
+  <div id="car_view_container"><!-- Car image container-->
+    <img id="car_view" ng-src="{{carresult.picture}}">
+  </div>
+  <div id="stat1"><!-- First car information container-->
+    <h3><h3 id="label">Make </h3>{{carresult.make}}</h3>
+    <h3><h3 id="label">Model: </h3>{{carresult.model}}</h3>
+    <h3><h3 id="label">Miles: </h3>{{carresult.miles}}</h3>
+  </div>
+  <div id="stat2"><!-- Second car information container-->
+    <h3><h3 id="label">Price </h3>£{{carresult.price}}</h3>
+    <h3><h3 id="label">Colour </h3>{{carresult.colour}}</h3>
+    <h3><h3 id="label">Town </h3>{{carresult.town}}</h3>
+  </div>
+  <div id="stat3"><!-- Third car information container-->
+    <h3><h3 id="label">Description </h3>{{carresult.description}}</h3>
+    <h3><h3 id="label">Region </h3>{{carresult.region}}</h3>
+  </div>
+  <div id="buttons">
+    <div id="email_button"><!-- Send email button (activates modal popup)-->
+  <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#myModal"><i class="fa fa-envelope"></i> Send to Email</button></div>
+  <div id="buy_button"><!-- Buy botton (sends user to next - checkout page)-->
+    <button type="button" class="btn btn-primary btn-lg" ng-click="transfer()"><i class="fa fa-car"></i> Buy</button></div>
+  </div>
+</div>

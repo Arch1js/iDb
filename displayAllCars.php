@@ -1,4 +1,3 @@
-
 <?php
 $data = file_get_contents("php://input");
 require 'dbconnect.php';
@@ -14,15 +13,6 @@ $stmt2 = $mysqli->prepare($sql2);
 
 }
 elseif ($objData->make !== "" || $objData->model !== "" || $objData->reg !== "" || $objData->colour !== "" || $objData->milage !== "" || $objData->price !== "") {
-
-  // $sql="select * from cars WHERE make=? AND model=? LIMIT 0, ?";
-  // $stmt = $mysqli->prepare($sql);
-  // $stmt->bind_param("ssi",$objData->make,$objData->model, $objData->dataCount);
-  //
-  //
-  // $sql2="select count(*) as count from cars WHERE make=? AND model=?";
-  // $stmt2 = $mysqli->prepare($sql2);
-  // $stmt2->bind_param("ss",$objData->make,$objData->model);
 
   if($objData->model === ""  && $objData->reg === "" && $objData->colour === "" && $objData->milage === "" && $objData->price === "") {
 
@@ -90,8 +80,16 @@ elseif ($objData->make !== "" || $objData->model !== "" || $objData->reg !== "" 
     $stmt2->bind_param("i",$objData->price);
 
   }
+  else if($objData->make == "" && $objData->colour == "" && $objData->milage == "" && $objData->price == "") {
+    $sql="select * from cars WHERE model = ? AND Reg=? LIMIT 0, ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("ssi", $objData->model,$objData->reg, $objData->dataCount);
 
+    $sql2="select count(*) as count from cars WHERE model = ? AND Reg=? ";
+    $stmt2 = $mysqli->prepare($sql2);
+    $stmt2->bind_param("ss",$objData->model, $objData->reg);
 
+  }
 
 }
 elseif ($objData->quick !== "") {
@@ -122,7 +120,6 @@ while ($row2 = mysqli_fetch_array($result2)) {
 }
 
 echo json_encode(array($data,$data2));
-
-
+$stmt->close();
 
 ?>
